@@ -19,6 +19,7 @@ public class Departement {
     private Long id;
     @Column(name = "name_dep")
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "departement")
-    private Set<Admin> admins;
+   // @OneToMany(cascade = CascadeType.ALL, mappedBy = "departement")
+   // private Set<Admin> admins;
+
 }

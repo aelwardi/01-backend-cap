@@ -31,7 +31,8 @@ public class Admin {
     private String pw;
     @Column(name = "etat")
     private Boolean etat;
-    @ManyToOne
-    @JoinColumn(name = "departement_id", nullable = false)
-    private Departement departement;
+    //@ManyToOne
+    //@JoinColumn(name = "departement_id", nullable = false)
+   // private Departement departement;
+
 }
