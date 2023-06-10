@@ -1,9 +1,9 @@
-package com.capgemini.lifescience.dao;
+package com.cagemini.lifescience.dao;
 
-import com.capgemini.lifescience.entity.Admin;
+import com.cagemini.lifescience.entity.Manager;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 @CrossOrigin("http://localhost:4200/")
-public interface AdminRepository extends JpaRepository<Admin, Long> {
+public interface ManagerRepository extends JpaRepository<Manager, Long> {
 }
