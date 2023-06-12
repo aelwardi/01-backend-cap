@@ -1,5 +1,6 @@
 package com.cagemini.lifescience.rest;
 
+<<<<<<< HEAD
 import com.cagemini.lifescience.entity.Departement;
 import com.cagemini.lifescience.entity.Role;
 import com.cagemini.lifescience.entity.SuperAdmin;
@@ -11,6 +12,17 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Date;
 
+=======
+import com.cagemini.lifescience.entity.Admin;
+import com.cagemini.lifescience.entity.Departement;
+import com.cagemini.lifescience.entity.SuperAdmin;
+import com.cagemini.lifescience.service.SuperAdminService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+>>>>>>> 268d89f119d99662c4afe3f2a2e1c2eba3eb9e0e
 
 @RestController
 @CrossOrigin("*")
@@ -33,6 +45,7 @@ public class SuperAdminController {
             return theSuperAdmin;
     }
 
+<<<<<<< HEAD
 
     @PostMapping("/super_admin" )
     public String addSuperAdmin(
@@ -52,12 +65,15 @@ public class SuperAdminController {
     }
 
     /*
+=======
+>>>>>>> 268d89f119d99662c4afe3f2a2e1c2eba3eb9e0e
     @PostMapping("/super_admin" )
     public SuperAdmin addDepartement(@RequestBody SuperAdmin theSuperAdmin){
         theSuperAdmin.setId(0L);
         SuperAdmin dbSuperAdmin = superAdminService.save(theSuperAdmin);
         return dbSuperAdmin;
     }
+<<<<<<< HEAD
     */
 
     /*
@@ -108,6 +124,14 @@ public class SuperAdminController {
         return superAdminService.updateSuperAdmin(theSuperAdmin);
     }
 
+=======
+
+    @PutMapping("/super_admin/{id}")
+    public SuperAdmin updateSuperAdmin(@PathVariable Long id,@RequestBody SuperAdmin theSuperAdmin){
+        theSuperAdmin.setId(id);
+        return superAdminService.updateSuperAdmin(theSuperAdmin);
+    }
+>>>>>>> 268d89f119d99662c4afe3f2a2e1c2eba3eb9e0e
 /*
     @DeleteMapping("/super_admin/{adminId}")
     public  String deleteSuperAdmin(@PathVariable Long superAdminId){
