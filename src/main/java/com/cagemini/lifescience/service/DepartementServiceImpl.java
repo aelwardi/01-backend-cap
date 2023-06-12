@@ -1,0 +1,64 @@
+package com.cagemini.lifescience.service;
+
+import com.cagemini.lifescience.dao.DepartementRepository;
+import com.cagemini.lifescience.entity.Admin;
+import com.cagemini.lifescience.entity.Departement;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+@Transactional
+public class DepartementServiceImpl implements DepartementService {
+
+    private DepartementRepository departementRepository;
+
+    @Autowired
+    public DepartementServiceImpl(DepartementRepository departementRepository) {
+        this.departementRepository = departementRepository;
+    }
+
+
+    @Override
+    public List<Departement> findAll() {
+        return departementRepository.findAll();
+    }
+
+    @Override
+    public Departement findById(Long theId) {
+        Optional<Departement>result=departementRepository.findById(theId);
+        Departement theDepartement =null;
+        if (result.isPresent()){
+            theDepartement = result.get();
+        }
+        else {
+            throw new RuntimeException("didn't find admin id:"+theId);
+        }
+        return theDepartement;
+    }
+
+    @Override
+    public Departement save(Departement theDepartement) {
+        return departementRepository.save(theDepartement);
+    }
+
+    @Override
+    public Departement updateDepartement(Departement theDepartement) {
+        return departementRepository.save(theDepartement);
+    }
+
+    @Override
+    public Page<Departement> findByLastNameContaining(String name, Pageable page) {
+        return departementRepository.findByNameContaining(name,page);
+    }
+
+    @Override
+    public void deleteById(Long theId) {
+        departementRepository.deleteById(theId);
+    }
+}
