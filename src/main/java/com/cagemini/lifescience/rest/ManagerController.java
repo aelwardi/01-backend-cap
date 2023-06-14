@@ -44,4 +44,10 @@ public class ManagerController {
         theManager.setId(id);
         return managerService.updateManager(theManager);
     }
+
+    @GetMapping("/managers/search")
+    public List<Manager> searchManagers(
+            @RequestParam("term") String term) {
+        return managerService.searchByNameOrLastName(term);
+    }
 }

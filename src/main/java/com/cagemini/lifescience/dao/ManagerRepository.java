@@ -2,16 +2,17 @@ package com.cagemini.lifescience.dao;
 
 import com.cagemini.lifescience.entity.Manager;
 import org.springframework.data.jpa.repository.JpaRepository;
-<<<<<<< HEAD
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-@CrossOrigin("http://localhost:4200/")
-@Repository
-=======
-import org.springframework.web.bind.annotation.CrossOrigin;
+import java.util.List;
 
 @CrossOrigin("http://localhost:4200/")
->>>>>>> 268d89f119d99662c4afe3f2a2e1c2eba3eb9e0e
+@Repository
 public interface ManagerRepository extends JpaRepository<Manager, Long> {
+
+    @Query("SELECT m FROM Manager m WHERE m.firstName LIKE %:term% OR m.lastName LIKE %:term%")
+    List<Manager> searchByNameOrLastName(@Param("term") String term);
 }

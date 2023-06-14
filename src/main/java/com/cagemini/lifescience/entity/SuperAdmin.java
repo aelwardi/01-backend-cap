@@ -2,10 +2,7 @@ package com.cagemini.lifescience.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-<<<<<<< HEAD
 import org.springframework.web.multipart.MultipartFile;
-=======
->>>>>>> 268d89f119d99662c4afe3f2a2e1c2eba3eb9e0e
 
 import java.util.Date;
 import java.util.Set;
@@ -21,12 +18,8 @@ public class SuperAdmin {
     private Date dateOfBirth;
     private String phone;
     private String sexe;
-<<<<<<< HEAD
     @Column(name = "photo", columnDefinition = "LONGBLOB")
     private byte[] photo;
-=======
-    private String photo;
->>>>>>> 268d89f119d99662c4afe3f2a2e1c2eba3eb9e0e
     private String email;
     private String password;
     private Boolean etat;
@@ -37,19 +30,11 @@ public class SuperAdmin {
     @JsonIgnore
     private Set<Admin> admins;
 
-    @OneToMany(mappedBy = "superAdmin" ,cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<Manager> managers;
-
     public SuperAdmin(){
 
     }
 
-<<<<<<< HEAD
-    public SuperAdmin(String firstName, String lastName, Date dateOfBirth, String phone, String sexe, byte[] photo, String email, String password, Boolean etat, Role role, Set<Admin> admins, Set<Manager> managers) {
-=======
-    public SuperAdmin(String firstName, String lastName, Date dateOfBirth, String phone, String sexe, String photo, String email, String password, Boolean etat, Role role, Set<Admin> admins, Set<Manager> managers) {
->>>>>>> 268d89f119d99662c4afe3f2a2e1c2eba3eb9e0e
+    public SuperAdmin(String firstName, String lastName, Date dateOfBirth, String phone, String sexe, byte[] photo, String email, String password, Boolean etat, Role role, Set<Admin> admins) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -61,7 +46,6 @@ public class SuperAdmin {
         this.etat = etat;
         this.role = role;
         this.admins = admins;
-        this.managers = managers;
     }
 
     public Long getId() {
@@ -111,19 +95,11 @@ public class SuperAdmin {
         this.sexe = sexe;
     }
 
-<<<<<<< HEAD
     public byte[] getPhoto() {
         return photo;
     }
 
     public void setPhoto(byte[] photo) {
-=======
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
->>>>>>> 268d89f119d99662c4afe3f2a2e1c2eba3eb9e0e
         this.photo = photo;
     }
 
@@ -167,11 +143,4 @@ public class SuperAdmin {
         this.admins = admins;
     }
 
-    public Set<Manager> getManagers() {
-        return managers;
-    }
-
-    public void setManagers(Set<Manager> managers) {
-        this.managers = managers;
-    }
 }

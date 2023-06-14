@@ -1,18 +1,21 @@
 package com.cagemini.lifescience.service;
 
 import com.cagemini.lifescience.entity.Admin;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.cagemini.lifescience.entity.Departement;
+import com.cagemini.lifescience.entity.Manager;
 
 import java.util.List;
+import java.util.Set;
 
 
 public interface AdminService {
     List<Admin>findAll();
     Admin findById(Long theId);
-     Admin save(Admin theAdmin);
-     Admin updateAdmin(Admin theAdmin);
+    Admin save(Admin theAdmin);
+    Admin updateAdmin(Admin theAdmin);
     List<Admin> searchByNameOrLastName(String term);
-     void  deleteById(Long theId);
+    void  deleteById(Long theId);
+    Departement getDepartementByAdmin(Long adminId);
+    Set<Manager> getManagersByAdmin(Long adminId);
 
 }

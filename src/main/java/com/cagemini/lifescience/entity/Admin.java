@@ -7,6 +7,8 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Date;
+import java.util.Set;
+
 @Entity
 @Table(name = "admin")
 public class Admin {
@@ -26,6 +28,9 @@ public class Admin {
     private String photo;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToMany(mappedBy = "admin" ,cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Manager> managers;
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "departement_id", nullable = false)
     private Departement departement;
@@ -37,7 +42,7 @@ public class Admin {
     public Admin() {
     }
 
-    public Admin(String lastName, String firstName, Date dateBirth, String phone, String sexe, String email, String password, Boolean etat, String photo, Role role, Departement departement, SuperAdmin superAdmin) {
+    public Admin(String lastName, String firstName, Date dateBirth, String phone, String sexe, String email, String password, Boolean etat, String photo, Role role, Set<Manager> managers, Departement departement, SuperAdmin superAdmin) {
         this.lastName = lastName;
         this.firstName = firstName;
         DateBirth = dateBirth;
@@ -48,6 +53,7 @@ public class Admin {
         this.etat = etat;
         this.photo = photo;
         this.role = role;
+        this.managers = managers;
         this.departement = departement;
         this.superAdmin = superAdmin;
     }
@@ -156,4 +162,11 @@ public class Admin {
         this.superAdmin = superAdmin;
     }
 
+    public Set<Manager> getManagers() {
+        return managers;
+    }
+
+    public void setManagers(Set<Manager> managers) {
+        this.managers = managers;
+    }
 }
