@@ -2,6 +2,7 @@ package com.cagemini.lifescience.service;
 
 
 import com.cagemini.lifescience.dao.DepartementRepository;
+import com.cagemini.lifescience.dao.ManagerRepository;
 import com.cagemini.lifescience.entity.Admin;
 import com.cagemini.lifescience.dao.AdminRepository;
 import com.cagemini.lifescience.entity.Departement;
@@ -80,7 +81,17 @@ public class AdminServiceImpl implements AdminService{
         }
         return null;
     }
+    @Autowired
+    private ManagerRepository managerRepository;
 
+    @Override
+    public Set<Manager> getManagersByAdmin(Long adminId) {
+        Admin admin = adminRepository.findById(adminId).orElse(null);
+        if (admin != null) {
+            return managerRepository.findByAdminId(adminId);
+        }
+        return null;
+    }/*
     @Override
     public Set<Manager> getManagersByAdmin(Long adminId) {
         Admin admin = adminRepository.findById(adminId).orElse(null);
@@ -88,7 +99,9 @@ public class AdminServiceImpl implements AdminService{
             return admin.getManagers();
         }
         return null;
-    }
+    }*/
+
+
 
 //    @Override
 //    public Page<Admin> findByFirstNameContainingOrLastNameContaining(String lastName, Pageable page) {

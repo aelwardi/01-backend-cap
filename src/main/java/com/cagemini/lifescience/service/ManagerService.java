@@ -10,5 +10,6 @@ public interface ManagerService {
     Manager findById(Long theId);
     Manager save(Manager theManager);
     Manager updateManager(Manager theManager);
-    List<Manager> searchByNameOrLastName(String term);
+    List<Manager> searchByNameOrLastName(Long adminId, String term);
+    Manager getManagerByAdminIdAndManagerId(Long adminId, Long managerId);
 }

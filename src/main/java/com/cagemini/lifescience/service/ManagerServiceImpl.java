@@ -52,8 +52,13 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public List<Manager> searchByNameOrLastName(@RequestParam("term") String term) {
-        return managerRepository.searchByNameOrLastName(term);
+    public List<Manager> searchByNameOrLastName(@RequestParam("adminId") Long adminId ,@RequestParam("term") String term) {
+        return managerRepository.searchByNameOrLastName(adminId ,term);
+    }
+
+    @Override
+    public Manager getManagerByAdminIdAndManagerId(Long adminId, Long managerId) {
+        return managerRepository.findByAdminIdAndId(adminId, managerId);
     }
 
 }
