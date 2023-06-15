@@ -28,7 +28,7 @@ public class DepartementController {
     public Departement findById(@PathVariable Long departementId){
         Departement theDepartement = departementService.findById(departementId);
         if (theDepartement == null){
-            throw new RuntimeException("the Admin id not found "+departementId);
+            throw new RuntimeException("the Apprenant id not found "+departementId);
         }
         else
             return theDepartement;
@@ -61,7 +61,7 @@ public class DepartementController {
     }
 
     @GetMapping("/departements/search")
-    public Page<Departement> searchAdmins(
+    public Page<Departement> searchDepartements(
             @RequestParam("name") String name, Pageable page
     ) {
         return departementService.findByLastNameContaining(name, page);

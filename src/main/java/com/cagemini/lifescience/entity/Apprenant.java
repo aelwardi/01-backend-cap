@@ -1,19 +1,14 @@
 package com.cagemini.lifescience.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Date;
-import java.util.List;
-
 @Entity
-@Table(name = "admin")
-public class Admin {
+@Table(name = "apprenant")
+public class Apprenant {
+
     @Id
-   // @Column(name = "admin_id",unique = true,nullable = false)
+    // @Column(name = "admin_id",unique = true,nullable = false)
     // @GenericGenerator(name = "gen",strategy = "foreign",parameters = {@org.hibernate.annotations.Parameter(name = "property",value = "admin")})
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,22 +23,23 @@ public class Admin {
     private String photo;
     @Enumerated(EnumType.STRING)
     private Role role;
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "departement_id", nullable = false)
+    @ManyToOne()
+    @JoinColumn(name = "departement_id")
     private Departement departement;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "super_admin_id", nullable = false)
-    private SuperAdmin superAdmin;
+    @ManyToOne
+    @JoinColumn(name = "admin_id")
+    private Admin admin;
 
 
-    @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL)
-    private List<Apprenant> apprenants;
 
-    public Admin() {
-    }
+//    @ManyToOne(cascade = CascadeType.PERSIST)
+//    @JoinColumn(name = "super_admin_id")
+//    private SuperAdmin superAdmin;
 
-    public Admin(String lastName, String firstName, Date dateBirth, String phone, String sexe, String email, String password, Boolean etat, String photo, Role role, Departement departement, SuperAdmin superAdmin) {
+
+    public Apprenant(Long id, String lastName, String firstName, Date dateBirth, String phone, String sexe, String email, String password, Boolean etat, String photo, Role role, Departement departement, SuperAdmin superAdmin) {
+        this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
         DateBirth = dateBirth;
@@ -55,10 +51,15 @@ public class Admin {
         this.photo = photo;
         this.role = role;
         this.departement = departement;
-        this.superAdmin = superAdmin;
+        //this.superAdmin = superAdmin;
+        this.admin = admin;
+
+
     }
 
-    public long getId() {
+    public Apprenant(){}
+
+    public Long getId() {
         return id;
     }
 
@@ -106,14 +107,6 @@ public class Admin {
         this.sexe = sexe;
     }
 
-    public Departement getDepartement() {
-        return departement;
-    }
-
-    public void setDepartement(Departement departement) {
-        this.departement = departement;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -154,12 +147,46 @@ public class Admin {
         this.role = role;
     }
 
-    public SuperAdmin getSuperAdmin() {
-        return superAdmin;
+    public Departement getDepartement() {
+        return departement;
     }
 
-    public void setSuperAdmin(SuperAdmin superAdmin) {
-        this.superAdmin = superAdmin;
+    public void setDepartement(Departement departement) {
+        this.departement = departement;
     }
 
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
+    //public SuperAdmin getSuperAdmin() {
+//        return superAdmin;
+//    }
+
+//    public void setSuperAdmin(SuperAdmin superAdmin) {
+//        this.superAdmin = superAdmin;
+//    }
+
+    @Override
+    public String toString() {
+        return "Apprenant{" +
+                "id=" + id +
+                ", lastName='" + lastName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", DateBirth=" + DateBirth +
+                ", phone='" + phone + '\'' +
+                ", sexe='" + sexe + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", etat=" + etat +
+                ", photo='" + photo + '\'' +
+                ", role=" + role +
+                ", departement=" + departement +
+                ", admin=" + admin +
+                '}';
+    }
 }

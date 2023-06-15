@@ -1,9 +1,11 @@
 package com.cagemini.lifescience.service;
 
 
+import com.cagemini.lifescience.dao.ApprenantRepository;
 import com.cagemini.lifescience.dao.DepartementRepository;
 import com.cagemini.lifescience.entity.Admin;
 import com.cagemini.lifescience.dao.AdminRepository;
+import com.cagemini.lifescience.entity.Apprenant;
 import com.cagemini.lifescience.entity.Departement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -67,6 +70,27 @@ public class AdminServiceImpl implements AdminService{
     public void deleteById(Long theId) {
         adminRepository.deleteById(theId);
 
+    }
+
+
+    @Override
+    public Departement getDepartementByAdmin(Long adminId) {
+        Admin admin = adminRepository.findById(adminId).orElse(null);
+        if (admin != null) {
+            return admin.getDepartement();
+        }
+        return null;
+    }
+    @Autowired
+    private ApprenantRepository apprenantRepository;
+
+    @Override
+    public Set<Apprenant> getApprenantsByAdmin(Long adminId) {
+        Admin admin = adminRepository.findById(adminId).orElse(null);
+        if (admin != null) {
+            return apprenantRepository.findByAdminId(adminId);
+        }
+        return null;
     }
 
 //    @Override
