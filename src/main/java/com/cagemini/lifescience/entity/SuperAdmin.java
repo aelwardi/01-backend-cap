@@ -34,7 +34,7 @@ public class SuperAdmin {
 
     }
 
-    public SuperAdmin(String firstName, String lastName, Date dateOfBirth, String phone, String sexe, byte[] photo, String email, String password, Boolean etat, Role role, Set<Admin> admins) {
+    public SuperAdmin(String firstName, String lastName, Date dateOfBirth, String phone, String sexe, byte[] photo, String email, String password, Boolean etat, Role role, Set<Admin> admins, Set<Manager> managers) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;

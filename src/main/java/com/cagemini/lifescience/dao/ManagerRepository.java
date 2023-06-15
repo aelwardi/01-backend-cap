@@ -1,5 +1,4 @@
 package com.cagemini.lifescience.dao;
-
 import com.cagemini.lifescience.entity.Manager;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,9 +8,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 import java.util.Set;
+import org.springframework.stereotype.Repository;
 
-@CrossOrigin("http://localhost:4200/")
 @Repository
+@CrossOrigin("http://localhost:4200/")
 public interface ManagerRepository extends JpaRepository<Manager, Long> {
 
     @Query("SELECT m FROM Manager m JOIN m.admin a WHERE a.id = :adminId AND (m.firstName LIKE %:term% OR m.lastName LIKE %:term%)")
