@@ -36,7 +36,7 @@ public class Manager {
     @JoinColumn(name = "admin_id", nullable = false)
     private Admin admin;
 
-    @OneToMany(mappedBy = "manager")
+    @OneToMany(mappedBy = "manager", fetch = FetchType.EAGER)
     private List<ManagerApprenant> managerApprenants;
 
     public Manager() {
