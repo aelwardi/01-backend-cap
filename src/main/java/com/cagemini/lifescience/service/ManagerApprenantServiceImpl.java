@@ -7,6 +7,7 @@ import com.cagemini.lifescience.entity.Apprenant;
 import com.cagemini.lifescience.entity.Manager;
 import com.cagemini.lifescience.entity.ManagerApprenant;
 import com.cagemini.lifescience.entity.ManagerApprenantId;
+import com.cagemini.lifescience.model.ManagerApprenantDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,26 @@ public class ManagerApprenantServiceImpl implements ManagerApprenantService{
     }
 
     @Override
+    public ManagerApprenantDTO getApprenantsByManagerId(Long managerId) {
+        Optional<Manager> managerOptional = managerRepository.findById(managerId);
+        if (managerOptional.isPresent()){
+            Manager manager = managerOptional.get();
+            List<ManagerApprenant> managerApprenants = managerApprenantRepository.findByManager(manager);
+            List<Apprenant> apprenants = managerApprenants.stream()
+                    .map(ManagerApprenant::getApprenant)
+                    .collect(Collectors.toList());
+
+            ManagerApprenantDTO managerApprenantDTO = new ManagerApprenantDTO();
+            managerApprenantDTO.setManager(manager);
+            managerApprenantDTO.setApprenants(apprenants);
+            return managerApprenantDTO;
+        } else {
+            throw new EntityNotFoundException("Manager not found with ID: " + managerId);
+        }
+    }
+
+    /*
+    @Override
     public List<Apprenant> getApprenantsByManagerId(Long managerId) {
         Optional<Manager> managerOptional = managerRepository.findById(managerId);
         if (managerOptional.isPresent()) {
@@ -61,5 +82,5 @@ public class ManagerApprenantServiceImpl implements ManagerApprenantService{
         } else {
             throw new EntityNotFoundException("Manager not found with ID: " + managerId);
         }
-    }
+    }*/
 }

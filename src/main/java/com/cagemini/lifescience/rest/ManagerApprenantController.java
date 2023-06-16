@@ -3,6 +3,7 @@ package com.cagemini.lifescience.rest;
 import com.cagemini.lifescience.entity.Apprenant;
 import com.cagemini.lifescience.entity.ManagerApprenant;
 import com.cagemini.lifescience.entity.ManagerApprenantId;
+import com.cagemini.lifescience.model.ManagerApprenantDTO;
 import com.cagemini.lifescience.service.ManagerApprenantService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,8 @@ public class ManagerApprenantController {
     }
 
     @GetMapping("/manager_apprenant/{managerId}/apprenants")
-    public List<Apprenant> getApprenantsByManagerId(@PathVariable Long managerId) {
+   // public List<Apprenant> getApprenantsByManagerId(@PathVariable Long managerId) {
+    public ManagerApprenantDTO getApprenantsByManagerId(@PathVariable Long managerId) {
         return managerApprenantService.getApprenantsByManagerId(managerId);
     }
 }
