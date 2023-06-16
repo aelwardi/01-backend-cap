@@ -2,8 +2,10 @@ package com.cagemini.lifescience.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "manager")
@@ -21,7 +23,7 @@ public class Manager {
     private String sexe;
     private String email;
     private String password;
-    private  Boolean etat;
+    private  boolean etat;
     @Column(name = "photo", columnDefinition = "LONGBLOB")
     private byte[] photo;
     @Enumerated(EnumType.STRING)
@@ -33,6 +35,9 @@ public class Manager {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "admin_id", nullable = false)
     private Admin admin;
+
+    @OneToMany(mappedBy = "manager")
+    private List<ManagerApprenant> managerApprenants;
 
     public Manager() {
     }
@@ -52,6 +57,13 @@ public class Manager {
         this.admin = admin;
     }
 
+    public List<Apprenant> getApprenants() {
+        List<Apprenant> apprenants = new ArrayList<>();
+        for (ManagerApprenant ma : managerApprenants) {
+            apprenants.add(ma.getApprenant());
+        }
+        return apprenants;
+    }
     public Long getId() {
         return id;
     }
