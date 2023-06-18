@@ -20,7 +20,8 @@ public class Apprenant {
     private String email;
     private String password;
     private  Boolean etat;
-    private String photo;
+    @Column(name = "photo", columnDefinition = "LONGBLOB")
+    private byte[] photo;
     @Enumerated(EnumType.STRING)
     private Role role;
     @ManyToOne()
@@ -38,7 +39,7 @@ public class Apprenant {
 //    private SuperAdmin superAdmin;
 
 
-    public Apprenant(Long id, String lastName, String firstName, Date dateBirth, String phone, String sexe, String email, String password, Boolean etat, String photo, Role role, Departement departement, SuperAdmin superAdmin) {
+    public Apprenant(Long id, String lastName, String firstName, Date dateBirth, String phone, String sexe, String email, String password, Boolean etat, byte[] photo, Role role, Departement departement, Admin admin) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -51,10 +52,7 @@ public class Apprenant {
         this.photo = photo;
         this.role = role;
         this.departement = departement;
-        //this.superAdmin = superAdmin;
         this.admin = admin;
-
-
     }
 
     public Apprenant(){}
@@ -131,11 +129,12 @@ public class Apprenant {
         this.etat = etat;
     }
 
-    public String getPhoto() {
+
+    public byte[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 

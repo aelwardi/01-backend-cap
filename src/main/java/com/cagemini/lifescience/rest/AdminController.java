@@ -1,12 +1,15 @@
 package com.cagemini.lifescience.rest;
 
 import com.cagemini.lifescience.entity.Admin;
+import com.cagemini.lifescience.entity.Apprenant;
+import com.cagemini.lifescience.entity.Departement;
 import com.cagemini.lifescience.service.AdminService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin("*")
@@ -26,6 +29,14 @@ public class AdminController {
     @GetMapping("/admins")
     public List<Admin> findAll (){
         return adminService.findAll();
+    }
+    @GetMapping("/admins/{adminId}/departements")
+    public Departement getDepartementByAdmin(@PathVariable Long adminId) {
+        return adminService.getDepartementByAdmin(adminId);
+    }
+    @GetMapping("/admins/{adminId}/apprenants")
+    public Set<Apprenant> getApprenantsByAdminId(@PathVariable Long adminId) {
+        return adminService.getApprenantsByAdmin(adminId);
     }
 
     @GetMapping("/admins/{adminId}")
