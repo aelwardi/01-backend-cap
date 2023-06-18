@@ -3,13 +3,16 @@ package com.cagemini.lifescience.service;
 
 import com.cagemini.lifescience.dao.ApprenantRepository;
 import com.cagemini.lifescience.dao.DepartementRepository;
+import com.cagemini.lifescience.dao.ManagerRepository;
 import com.cagemini.lifescience.entity.Admin;
 import com.cagemini.lifescience.dao.AdminRepository;
 import com.cagemini.lifescience.entity.Apprenant;
 import com.cagemini.lifescience.entity.Departement;
+import com.cagemini.lifescience.entity.Manager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -71,8 +74,7 @@ public class AdminServiceImpl implements AdminService{
         adminRepository.deleteById(theId);
 
     }
-
-
+  
     @Override
     public Departement getDepartementByAdmin(Long adminId) {
         Admin admin = adminRepository.findById(adminId).orElse(null);
@@ -82,6 +84,26 @@ public class AdminServiceImpl implements AdminService{
         return null;
     }
     @Autowired
+    private ManagerRepository managerRepository;
+
+    @Override
+    public Set<Manager> getManagersByAdmin(Long adminId) {
+        Admin admin = adminRepository.findById(adminId).orElse(null);
+        if (admin != null) {
+            return managerRepository.findByAdminId(adminId);
+        }
+        return null;
+    }/*
+    @Override
+    public Set<Manager> getManagersByAdmin(Long adminId) {
+        Admin admin = adminRepository.findById(adminId).orElse(null);
+        if (admin != null) {
+            return admin.getManagers();
+        }
+        return null;
+    }*/
+
+  @Autowired
     private ApprenantRepository apprenantRepository;
 
     @Override

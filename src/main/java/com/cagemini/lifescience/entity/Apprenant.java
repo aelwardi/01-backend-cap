@@ -39,6 +39,7 @@ public class Apprenant {
 //    private SuperAdmin superAdmin;
 
 
+
     public Apprenant(Long id, String lastName, String firstName, Date dateBirth, String phone, String sexe, String email, String password, Boolean etat, byte[] photo, Role role, Departement departement, Admin admin) {
         this.id = id;
         this.lastName = lastName;
@@ -128,8 +129,6 @@ public class Apprenant {
     public void setEtat(Boolean etat) {
         this.etat = etat;
     }
-
-
     public byte[] getPhoto() {
         return photo;
     }

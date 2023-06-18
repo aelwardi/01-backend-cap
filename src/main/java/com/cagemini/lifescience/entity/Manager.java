@@ -2,7 +2,10 @@ package com.cagemini.lifescience.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "manager")
@@ -15,13 +18,14 @@ public class Manager {
     private Long id;
     private String lastName;
     private String firstName;
-    private Date DateBirth;
+    private Date dateBirth;
     private String phone;
     private String sexe;
     private String email;
     private String password;
-    private  Boolean etat;
-    private String photo;
+    private  boolean etat;
+    @Column(name = "photo", columnDefinition = "LONGBLOB")
+    private byte[] photo;
     @Enumerated(EnumType.STRING)
     private Role role;
     @ManyToOne(cascade = CascadeType.PERSIST)
@@ -29,16 +33,19 @@ public class Manager {
     private Departement departement;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "super_admin_id", nullable = false)
-    private SuperAdmin superAdmin;
+    @JoinColumn(name = "admin_id", nullable = false)
+    private Admin admin;
+
+    @OneToMany(mappedBy = "manager", fetch = FetchType.EAGER)
+    private List<ManagerApprenant> managerApprenants;
 
     public Manager() {
     }
 
-    public Manager(String lastName, String firstName, Date dateBirth, String phone, String sexe, String email, String password, Boolean etat, String photo, Role role, Departement departement, SuperAdmin superAdmin) {
+    public Manager(String lastName, String firstName, Date dateBirth, String phone, String sexe, String email, String password, Boolean etat, byte[] photo, Role role, Departement departement, Admin admin) {
         this.lastName = lastName;
         this.firstName = firstName;
-        DateBirth = dateBirth;
+        this.dateBirth = dateBirth;
         this.phone = phone;
         this.sexe = sexe;
         this.email = email;
@@ -47,9 +54,16 @@ public class Manager {
         this.photo = photo;
         this.role = role;
         this.departement = departement;
-        this.superAdmin = superAdmin;
+        this.admin = admin;
     }
 
+    public List<Apprenant> getApprenants() {
+        List<Apprenant> apprenants = new ArrayList<>();
+        for (ManagerApprenant ma : managerApprenants) {
+            apprenants.add(ma.getApprenant());
+        }
+        return apprenants;
+    }
     public Long getId() {
         return id;
     }
@@ -75,11 +89,11 @@ public class Manager {
     }
 
     public Date getDateBirth() {
-        return DateBirth;
+        return dateBirth;
     }
 
     public void setDateBirth(Date dateBirth) {
-        DateBirth = dateBirth;
+        this.dateBirth = dateBirth;
     }
 
     public String getPhone() {
@@ -122,11 +136,11 @@ public class Manager {
         this.etat = etat;
     }
 
-    public String getPhoto() {
+    public byte[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 
@@ -146,12 +160,12 @@ public class Manager {
         this.departement = departement;
     }
 
-    public SuperAdmin getSuperAdmin() {
-        return superAdmin;
+    public Admin getAdmin() {
+        return admin;
     }
 
-    public void setSuperAdmin(SuperAdmin superAdmin) {
-        this.superAdmin = superAdmin;
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
     }
 
     @Override
@@ -160,16 +174,16 @@ public class Manager {
                 "id=" + id +
                 ", lastName='" + lastName + '\'' +
                 ", firstName='" + firstName + '\'' +
-                ", DateBirth=" + DateBirth +
+                ", dateBirth=" + dateBirth +
                 ", phone='" + phone + '\'' +
                 ", sexe='" + sexe + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", etat=" + etat +
-                ", photo='" + photo + '\'' +
-                ", role='" + role + '\'' +
+                ", photo=" + Arrays.toString(photo) +
+                ", role=" + role +
                 ", departement=" + departement +
-                ", superAdmin=" + superAdmin +
+                ", admin=" + admin +
                 '}';
     }
 }

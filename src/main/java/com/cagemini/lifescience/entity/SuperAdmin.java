@@ -30,10 +30,6 @@ public class SuperAdmin {
     @JsonIgnore
     private Set<Admin> admins;
 
-    @OneToMany(mappedBy = "superAdmin" ,cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<Manager> managers;
-
     public SuperAdmin(){
 
     }
@@ -50,7 +46,6 @@ public class SuperAdmin {
         this.etat = etat;
         this.role = role;
         this.admins = admins;
-        this.managers = managers;
     }
 
     public Long getId() {
@@ -148,11 +143,4 @@ public class SuperAdmin {
         this.admins = admins;
     }
 
-    public Set<Manager> getManagers() {
-        return managers;
-    }
-
-    public void setManagers(Set<Manager> managers) {
-        this.managers = managers;
-    }
 }

@@ -3,6 +3,7 @@ package com.cagemini.lifescience.rest;
 import com.cagemini.lifescience.entity.Admin;
 import com.cagemini.lifescience.entity.Manager;
 import com.cagemini.lifescience.service.ManagerService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,5 +44,23 @@ public class ManagerController {
     public Manager updateAdmin(@PathVariable Long id,@RequestBody Manager theManager){
         theManager.setId(id);
         return managerService.updateManager(theManager);
+    }
+    @GetMapping("/managers/search")
+    public List<Manager> searchManagers(
+            @RequestParam("adminId") Long adminId,
+            @RequestParam("term") String term) {
+        return managerService.searchByNameOrLastName(adminId, term);
+    }
+
+    @GetMapping("/managers/details")
+    public ResponseEntity<Manager> getManagerDetails(
+            @RequestParam("adminId") Long adminId,
+            @RequestParam("id") Long id) {
+        Manager manager = managerService.getManagerByAdminIdAndManagerId(adminId, id);
+        if (manager == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(manager);
     }
 }
