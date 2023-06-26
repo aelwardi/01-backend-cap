@@ -1,14 +1,15 @@
 package com.cagemini.lifescience.service;
 
 import com.cagemini.lifescience.dao.DepartementRepository;
-import com.cagemini.lifescience.entity.Admin;
 import com.cagemini.lifescience.entity.Departement;
+import com.cagemini.lifescience.entity.Projet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,5 +61,13 @@ public class DepartementServiceImpl implements DepartementService {
     @Override
     public void deleteById(Long theId) {
         departementRepository.deleteById(theId);
+    }
+
+    @Override
+    public List<Projet> getProjetsByDepartement(Long departementId) {
+        Departement departement = departementRepository.findById(departementId)
+                .orElseThrow(() -> new IllegalArgumentException("Department not found with ID: " + departementId));
+
+        return new ArrayList<>(departement.getProjets());
     }
 }

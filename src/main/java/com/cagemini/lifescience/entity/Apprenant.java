@@ -167,23 +167,4 @@ public class Apprenant {
 //    public void setSuperAdmin(SuperAdmin superAdmin) {
 //        this.superAdmin = superAdmin;
 //    }
-
-    @Override
-    public String toString() {
-        return "Apprenant{" +
-                "id=" + id +
-                ", lastName='" + lastName + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", DateBirth=" + DateBirth +
-                ", phone='" + phone + '\'' +
-                ", sexe='" + sexe + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", etat=" + etat +
-                ", photo='" + photo + '\'' +
-                ", role=" + role +
-                ", departement=" + departement +
-                ", admin=" + admin +
-                '}';
-    }
 }

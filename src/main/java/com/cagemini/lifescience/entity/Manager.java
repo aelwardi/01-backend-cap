@@ -168,22 +168,4 @@ public class Manager {
         this.admin = admin;
     }
 
-    @Override
-    public String toString() {
-        return "Manager{" +
-                "id=" + id +
-                ", lastName='" + lastName + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", dateBirth=" + dateBirth +
-                ", phone='" + phone + '\'' +
-                ", sexe='" + sexe + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", etat=" + etat +
-                ", photo=" + Arrays.toString(photo) +
-                ", role=" + role +
-                ", departement=" + departement +
-                ", admin=" + admin +
-                '}';
-    }
 }

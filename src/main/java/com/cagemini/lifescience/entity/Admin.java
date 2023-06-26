@@ -20,13 +20,14 @@ public class Admin {
     private Long id;
     private String lastName;
     private String firstName;
-    private Date DateBirth;
+    private Date dateBirth;
     private String phone;
     private String sexe;
     private String email;
     private String password;
     private  Boolean etat;
-    private String photo;
+    @Column(name = "photo", columnDefinition = "LONGBLOB")
+    private byte[] photo;
     @Enumerated(EnumType.STRING)
     private Role role;
     @OneToMany(mappedBy = "admin" ,cascade = CascadeType.ALL)
@@ -42,15 +43,16 @@ public class Admin {
 
 
     @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Apprenant> apprenants;
 
     public Admin() {
     }
 
-    public Admin(String lastName, String firstName, Date dateBirth, String phone, String sexe, String email, String password, Boolean etat, String photo, Role role, Set<Manager> managers, Departement departement, SuperAdmin superAdmin) {
+    public Admin(String lastName, String firstName, Date dateBirth, String phone, String sexe, String email, String password, Boolean etat, byte[] photo, Role role, Set<Manager> managers, Departement departement, SuperAdmin superAdmin, List<Apprenant> apprenants) {
         this.lastName = lastName;
         this.firstName = firstName;
-        DateBirth = dateBirth;
+        this.dateBirth = dateBirth;
         this.phone = phone;
         this.sexe = sexe;
         this.email = email;
@@ -61,6 +63,7 @@ public class Admin {
         this.managers = managers;
         this.departement = departement;
         this.superAdmin = superAdmin;
+        this.apprenants = apprenants;
     }
 
     public long getId() {
@@ -88,11 +91,11 @@ public class Admin {
     }
 
     public Date getDateBirth() {
-        return DateBirth;
+        return dateBirth;
     }
 
     public void setDateBirth(Date dateBirth) {
-        DateBirth = dateBirth;
+        this.dateBirth = dateBirth;
     }
 
     public String getPhone() {
@@ -143,12 +146,20 @@ public class Admin {
         this.etat = etat;
     }
 
-    public String getPhoto() {
+    public byte[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
+    }
+
+    public List<Apprenant> getApprenants() {
+        return apprenants;
+    }
+
+    public void setApprenants(List<Apprenant> apprenants) {
+        this.apprenants = apprenants;
     }
 
     public Role getRole() {
