@@ -27,12 +27,17 @@ public class Departement {
     @JsonIgnore
     private Set<Apprenant> apprenants;
 
+    @OneToMany(mappedBy = "departement", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Projet> projets;
+
     public Departement(){}
 
-    public Departement(String name, Set<Admin> admins, Set<Apprenant> apprenants) {
+    public Departement(String name, Set<Admin> admins, Set<Apprenant> apprenants, Set<Projet> projets) {
         this.name = name;
         this.admins = admins;
         this.apprenants = apprenants;
+        this.projets = projets;
     }
 
     public Long getId() {
@@ -67,4 +72,11 @@ public class Departement {
         this.apprenants = apprenants;
     }
 
+    public Set<Projet> getProjets() {
+        return projets;
+    }
+
+    public void setProjets(Set<Projet> projets) {
+        this.projets = projets;
+    }
 }

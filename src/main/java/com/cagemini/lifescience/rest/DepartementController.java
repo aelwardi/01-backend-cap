@@ -1,6 +1,8 @@
 package com.cagemini.lifescience.rest;
 
 import com.cagemini.lifescience.entity.Departement;
+import com.cagemini.lifescience.entity.Projet;
+import com.cagemini.lifescience.model.ApiResponse;
 import com.cagemini.lifescience.service.DepartementService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -48,7 +50,7 @@ public class DepartementController {
     }
 
     @DeleteMapping("/departements/{departementId}")
-    public  String deleteDelete(@PathVariable Long departementId){
+    public ApiResponse deleteDelete(@PathVariable Long departementId){
         Departement theDepartement = departementService.findById(departementId);
 
         //throw exception if null
@@ -57,7 +59,7 @@ public class DepartementController {
             throw new RuntimeException("the departement id not found "+departementId);
         }
         departementService.deleteById(departementId);
-        return ("Deleted departement id :" + departementId);
+        return ( new ApiResponse("Deleted departement id :" + departementId));
     }
 
     @GetMapping("/departements/search")
@@ -65,5 +67,10 @@ public class DepartementController {
             @RequestParam("name") String name, Pageable page
     ) {
         return departementService.findByLastNameContaining(name, page);
+    }
+
+    @GetMapping("/departements/{departementId}/projets")
+    public List<Projet> getProjetsByDepartement(@PathVariable Long departementId) {
+        return departementService.getProjetsByDepartement(departementId);
     }
 }

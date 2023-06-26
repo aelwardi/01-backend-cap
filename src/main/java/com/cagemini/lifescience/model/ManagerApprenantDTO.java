@@ -7,13 +7,13 @@ import java.util.List;
 
 public class ManagerApprenantDTO {
     private Manager manager;
-    private List<Apprenant> apprenants;
+    //private List<Apprenant> apprenants;
 
     public ManagerApprenantDTO() {
     }
-    public ManagerApprenantDTO(Manager manager, List<Apprenant> apprenants) {
+    public ManagerApprenantDTO(Manager manager) {
         this.manager = manager;
-        this.apprenants = apprenants;
+        //this.apprenants = apprenants;
     }
 
     public Manager getManager() {
@@ -23,12 +23,12 @@ public class ManagerApprenantDTO {
     public void setManager(Manager manager) {
         this.manager = manager;
     }
-
+/*
     public List<Apprenant> getApprenants() {
         return apprenants;
     }
 
     public void setApprenants(List<Apprenant> apprenants) {
         this.apprenants = apprenants;
-    }
+    }*/
 }

@@ -1,7 +1,7 @@
 package com.cagemini.lifescience.service;
 
-import com.cagemini.lifescience.entity.Admin;
 import com.cagemini.lifescience.entity.Departement;
+import com.cagemini.lifescience.entity.Projet;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -14,4 +14,6 @@ public interface DepartementService {
     Departement updateDepartement(Departement theDepartement);
     Page<Departement> findByLastNameContaining(String name, Pageable page);
     void  deleteById(Long theId);
+
+    List<Projet> getProjetsByDepartement(Long departementId);
 }
