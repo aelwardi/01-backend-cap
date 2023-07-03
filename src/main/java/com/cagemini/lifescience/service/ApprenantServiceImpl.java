@@ -69,10 +69,7 @@ public class ApprenantServiceImpl implements ApprenantService {
     public Apprenant getApprenantByAdminIdAndApprenantId(Long adminId, Long apprenantId) {
         return apprenantRepository.findByAdminIdAndId(adminId, apprenantId);
     }
-//    @Override
-//    public Apprenant getApprenantByAdminIdAndApprenantId(Long adminId, Long apprenantId) {
-//        return apprenantRepository.findByAdminIdAndId(adminId, apprenantId);
-//    }
+
 
 
 

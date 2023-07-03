@@ -9,6 +9,7 @@ import com.cagemini.lifescience.entity.Departement;
 import com.cagemini.lifescience.entity.Manager;
 import com.cagemini.lifescience.service.AdminService;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -95,5 +96,16 @@ public class AdminController {
     public List<Admin> searchAdmins(
             @RequestParam("term") String term) {
         return adminService.searchByNameOrLastName(term);
+    }
+
+    @GetMapping("/admins/details")
+    public ResponseEntity<Admin> getAdminDetails(
+            @RequestParam("theId") Long theId) {
+        Admin admin = adminService.findById(theId);
+        if (admin == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(admin);
     }
 }

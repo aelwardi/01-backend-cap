@@ -28,7 +28,7 @@ public class Apprenant {
     @JoinColumn(name = "departement_id")
     private Departement departement;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "admin_id")
     private Admin admin;
 
