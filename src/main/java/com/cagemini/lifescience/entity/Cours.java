@@ -1,9 +1,11 @@
 package com.cagemini.lifescience.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "cours")
@@ -27,6 +29,10 @@ public class Cours {
     
     @Column(name = "url")
     private String url;
+
+    @OneToMany(mappedBy = "cours" ,cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Chapitre> chapitres;
 
 
     public Cours(Long id, String title, String description, Date dateCreate, Date dateMAJ, Date estimateTime, String actor, String url) {

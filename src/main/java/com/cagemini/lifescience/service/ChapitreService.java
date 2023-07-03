@@ -1,0 +1,21 @@
+package com.cagemini.lifescience.service;
+
+import com.cagemini.lifescience.entity.Chapitre;
+import com.cagemini.lifescience.entity.Cours;
+import com.cagemini.lifescience.entity.Departement;
+
+import java.util.List;
+
+public interface ChapitreService {
+
+    List<Chapitre> findAll();
+    Chapitre findById(Long theId);
+    Chapitre save(Chapitre theChapitre);
+    Chapitre updateChapitre(Chapitre theChapitre);
+    void deleteById(Long theId);
+    Cours getCoursByChapitre(Long chapitreId);
+
+    //List<Section> getSectionByChapitre(Long ChapitreId);
+    //List<Quiz> getQuizByChapitre(Long ChapitreId);
+}
+
