@@ -1,9 +1,14 @@
 package com.cagemini.lifescience.rest;
 
 import com.cagemini.lifescience.entity.Admin;
+
+import com.cagemini.lifescience.entity.Apprenant;
 import com.cagemini.lifescience.entity.Departement;
+
+
 import com.cagemini.lifescience.entity.Manager;
 import com.cagemini.lifescience.service.AdminService;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,10 +29,7 @@ public class AdminController {
     }
 
 
-    @GetMapping("/admins/{adminId}/departements")
-    public Departement getDepartementByAdmin(@PathVariable Long adminId) {
-        return adminService.getDepartementByAdmin(adminId);
-    }
+
 
     @GetMapping("/admins/{adminId}/managers")
     public Set<Manager> getManagersByAdminId(@PathVariable Long adminId) {
@@ -37,6 +39,14 @@ public class AdminController {
     @GetMapping("/admins")
     public List<Admin> findAll (){
         return adminService.findAll();
+    }
+    @GetMapping("/admins/{adminId}/departements")
+    public Departement getDepartementByAdmin(@PathVariable Long adminId) {
+        return adminService.getDepartementByAdmin(adminId);
+    }
+    @GetMapping("/admins/{adminId}/apprenants")
+    public Set<Apprenant> getApprenantsByAdminId(@PathVariable Long adminId) {
+        return adminService.getApprenantsByAdmin(adminId);
     }
 
     @GetMapping("/admins/{adminId}")
@@ -86,5 +96,16 @@ public class AdminController {
     public List<Admin> searchAdmins(
             @RequestParam("term") String term) {
         return adminService.searchByNameOrLastName(term);
+    }
+
+    @GetMapping("/admins/details")
+    public ResponseEntity<Admin> getAdminDetails(
+            @RequestParam("theId") Long theId) {
+        Admin admin = adminService.findById(theId);
+        if (admin == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(admin);
     }
 }

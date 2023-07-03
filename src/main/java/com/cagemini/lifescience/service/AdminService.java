@@ -19,4 +19,5 @@ public interface AdminService {
     Departement getDepartementByAdmin(Long adminId);
     Set<Manager> getManagersByAdmin(Long adminId);
     Set<Apprenant> getApprenantsByAdmin(Long adminId);
+
 }
