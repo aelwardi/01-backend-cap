@@ -9,4 +9,5 @@ public interface ProjetService {
     Projet updateProjet(Projet theProjet);
     void  deleteById(Long theId);
     Projet findById(Long theId);
+    List<Projet> searchByNameOrNameClientAndDepartementId(String term, Long departementId);
 }
