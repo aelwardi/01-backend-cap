@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("http://localhost:4200/")
 @RestController
 public class ProjetController {
 
@@ -15,6 +16,12 @@ public class ProjetController {
     public ProjetController(ProjetService projetService) {
         this.projetService = projetService;
     }
+
+    @GetMapping("/projets/search")
+    public List<Projet> searchProjetByNameOrNameClientAndDepartementId(@RequestParam String term, @RequestParam Long departementId) {
+        return projetService.searchByNameOrNameClientAndDepartementId(term, departementId);
+    }
+
     @PostMapping("/projets" )
     public Projet addProjet(@RequestBody Projet theProjet){
         theProjet.setId(0L);
