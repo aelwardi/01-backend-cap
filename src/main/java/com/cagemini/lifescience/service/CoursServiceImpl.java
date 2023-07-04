@@ -2,8 +2,11 @@ package com.cagemini.lifescience.service;
 
 
 import com.cagemini.lifescience.dao.CoursRepository;
+import com.cagemini.lifescience.dao.ProjetRepository;
 import com.cagemini.lifescience.entity.Cours;
+import com.cagemini.lifescience.entity.Projet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -13,12 +16,14 @@ import java.util.Optional;
 public class CoursServiceImpl implements CoursService{
 
     private CoursRepository coursRepository;
+    private final ProjetRepository projetRepository;
 
 
     @Autowired
-    public CoursServiceImpl(CoursRepository theCoursRepository){
+    public CoursServiceImpl(CoursRepository theCoursRepository,ProjetRepository projetRepository){
 
         coursRepository=theCoursRepository;
+        this.projetRepository=projetRepository;
     }
     @Autowired
     public List<Cours> findAll(){
@@ -39,14 +44,40 @@ public class CoursServiceImpl implements CoursService{
         return theCours;
     }
 
+    //get courses by project:
     @Override
-    public Cours save(Cours theCours) {
-        return coursRepository.save(theCours);
+    public List<Cours> getCoursesByProjet(Projet projet) {
+        return coursRepository.findByProjet(projet);
+        }
+    //add Course To Projet
+    @Override
+    public Cours addCoursToProjet(Long projetId, Cours cours) {
+        Projet projet = projetRepository.findById(projetId)
+                .orElseThrow(() -> new ResourceNotFoundException("Projet not found with ID: " + projetId));
+
+        cours.setProjet(projet);
+        return coursRepository.save(cours);
     }
 
+        @Override
+        public Cours save(Cours theCours) {
+            return coursRepository.save(theCours);
+        }
+
+
     @Override
-    public Cours updateCours(Cours theCours) {
-        return coursRepository.save(theCours );
+    public Cours updateCours(Long coursId, Long projetId, Cours updatedCourse) {
+        Projet projet = projetRepository.findById(projetId)
+                .orElseThrow(() -> new ResourceNotFoundException("Projet not found with ID: " + projetId));
+
+        Cours existingCourse = coursRepository.findById(coursId)
+                .orElseThrow(() -> new ResourceNotFoundException("Cours not found with ID: " + coursId));
+
+        existingCourse.setProjet(projet);
+        existingCourse.setTitle(updatedCourse.getTitle());
+        // Update other course properties as needed
+
+        return coursRepository.save(existingCourse);
     }
 
     @Override

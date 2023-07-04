@@ -28,8 +28,11 @@ public class Cours {
     @Column(name = "url")
     private String url;
 
+    @ManyToOne
+    @JoinColumn(name = "projet_id")
+    private Projet projet;
 
-    public Cours(Long id, String title, String description, Date dateCreate, Date dateMAJ, Date estimateTime, String actor, String url) {
+    public Cours(Long id, String title, String description, Date dateCreate, Date dateMAJ, Date estimateTime, String actor, String url, Projet projet) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -38,7 +41,9 @@ public class Cours {
         this.estimateTime = estimateTime;
         this.actor = actor;
         this.url = url;
+        this.projet = projet;
     }
+
     public Cours(){
 
     }
@@ -105,6 +110,14 @@ public class Cours {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Projet getProjet() {
+        return projet;
+    }
+
+    public void setProjet(Projet projet) {
+        this.projet = projet;
     }
 
     @Override

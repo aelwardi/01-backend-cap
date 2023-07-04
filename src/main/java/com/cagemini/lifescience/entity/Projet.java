@@ -1,6 +1,10 @@
 package com.cagemini.lifescience.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "projet")
@@ -17,6 +21,10 @@ public class Projet {
     @ManyToOne
     @JoinColumn(name = "departement_id")
     private Departement departement;
+
+
+    @OneToMany(mappedBy = "projet")
+    private List<Cours> courses;
 
     public Projet() {
     }
