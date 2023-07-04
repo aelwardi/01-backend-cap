@@ -3,6 +3,7 @@ package com.cagemini.lifescience.service;
 
 import com.cagemini.lifescience.dao.CoursRepository;
 import com.cagemini.lifescience.dao.ProjetRepository;
+import com.cagemini.lifescience.entity.Chapitre;
 import com.cagemini.lifescience.entity.Cours;
 import com.cagemini.lifescience.entity.Projet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -89,5 +91,13 @@ public class CoursServiceImpl implements CoursService{
     public void deleteById(Long theId) {
         coursRepository.deleteById(theId);
 
+    }
+
+    @Override
+    public List<Chapitre> getChapitresByCour(Long courId) {
+        Cours theCours = coursRepository.findById(courId)
+                .orElseThrow(() -> new IllegalArgumentException("Cours not found with ID: " + courId));
+
+        return new ArrayList<>(theCours.getChapitrs());
     }
 }

@@ -1,6 +1,7 @@
 package com.cagemini.lifescience.rest;
 import com.cagemini.lifescience.dao.ProjetRepository;
 import com.cagemini.lifescience.entity.Apprenant;
+import com.cagemini.lifescience.entity.Chapitre;
 import com.cagemini.lifescience.entity.Cours;
 import com.cagemini.lifescience.entity.Projet;
 import com.cagemini.lifescience.service.CoursService;
@@ -90,5 +91,10 @@ public class CoursController {
     public List<Cours> searchCours(
             @RequestParam("term") String term) {
         return coursService.searchByTitle(term);
+    }
+
+    @GetMapping("/cours/{courId}/chapitres")
+    public List<Chapitre> getChapitresByCour(@PathVariable Long courId) {
+        return coursService.getChapitresByCour(courId);
     }
 }
