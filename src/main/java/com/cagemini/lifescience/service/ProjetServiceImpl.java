@@ -49,4 +49,9 @@ public class ProjetServiceImpl implements ProjetService {
         return theProjet;
     }
 
+    @Override
+    public List<Projet> searchByNameOrNameClientAndDepartementId(String term, Long departementId) {
+        return projetRepository.searchByNameOrNameClientAndDepartementId(term, departementId);
+    }
+
 }
