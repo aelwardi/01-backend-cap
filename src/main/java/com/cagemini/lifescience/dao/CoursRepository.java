@@ -2,6 +2,7 @@ package com.cagemini.lifescience.dao;
 
 import com.cagemini.lifescience.entity.Apprenant;
 import com.cagemini.lifescience.entity.Cours;
+import com.cagemini.lifescience.entity.Projet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,6 +15,7 @@ import java.util.List;
 @Repository
 public interface CoursRepository extends JpaRepository<Cours,Long> {
 
-   // @Query("SELECT c FROM Cours c WHERE c.title LIKE %:term% ")
+
     List<Cours> searchByTitle(@Param("term") String term);
+    List<Cours> findByProjet(Projet projet);
 }
