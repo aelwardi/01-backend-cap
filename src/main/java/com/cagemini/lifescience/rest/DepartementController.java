@@ -69,6 +69,7 @@ public class DepartementController {
         return departementService.findByLastNameContaining(name, page);
     }
 
+
     @GetMapping("/departements/{departementId}/projets")
     public List<Projet> getProjetsByDepartement(@PathVariable Long departementId) {
         return departementService.getProjetsByDepartement(departementId);

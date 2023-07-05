@@ -40,6 +40,7 @@ public class Manager {
     private List<ManagerApprenant> managerApprenants;
 
     public Manager() {
+        this.managerApprenants = new ArrayList<>();
     }
 
     public Manager(String lastName, String firstName, Date dateBirth, String phone, String sexe, String email, String password, Boolean etat, byte[] photo, Role role, Departement departement, Admin admin) {

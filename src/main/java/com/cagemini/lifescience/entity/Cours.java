@@ -17,7 +17,7 @@ public class Cours {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "description")
+    @Column(name = "description", length = 500)
     private String description;
 
     private Date dateCreate;
