@@ -3,17 +3,22 @@ package com.cagemini.lifescience.service;
 import com.cagemini.lifescience.dao.ChapitreRepository;
 import com.cagemini.lifescience.dao.CoursRepository;
 import com.cagemini.lifescience.entity.Chapitre;
+import com.cagemini.lifescience.entity.Quiz;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional
 public class ChapitreServiceImpl implements ChapitreService {
     private ChapitreRepository chapitreRepository;
 
+    @Autowired
     public ChapitreServiceImpl(ChapitreRepository thechapitreRepository) {
         chapitreRepository = thechapitreRepository;
     }
@@ -49,6 +54,14 @@ public class ChapitreServiceImpl implements ChapitreService {
     @Override
     public void deleteById(Long theId) {
         chapitreRepository.deleteById(theId);
+    }
+
+    @Override
+    public List<Quiz> getQuizByChapite(Long chapitreId) {
+        Chapitre chapitre = chapitreRepository.findById(chapitreId)
+                .orElseThrow(() -> new IllegalArgumentException("Chapitre not found with ID: " + chapitreId));
+
+        return new ArrayList<>(chapitre.getQuiz());
     }
 
 }

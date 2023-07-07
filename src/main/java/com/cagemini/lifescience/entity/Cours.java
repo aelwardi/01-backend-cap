@@ -34,7 +34,7 @@ public class Cours {
     @JoinColumn(name = "projet_id")
     private Projet projet;
 
-    @OneToMany(mappedBy = "cours" , cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cours" , cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Chapitre> chapitres;
 

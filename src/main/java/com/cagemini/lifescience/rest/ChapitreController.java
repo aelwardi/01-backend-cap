@@ -1,6 +1,7 @@
 package com.cagemini.lifescience.rest;
 
 import com.cagemini.lifescience.entity.Chapitre;
+import com.cagemini.lifescience.entity.Quiz;
 import com.cagemini.lifescience.model.ApiResponse;
 import com.cagemini.lifescience.service.ChapitreService;
 import org.springframework.web.bind.annotation.*;
@@ -59,5 +60,9 @@ public class ChapitreController {
 
     }
 
+    @GetMapping("/chapitres/{chapitreId}/quiz")
+    public List<Quiz> getQuizByChapitre(@PathVariable Long chapitreId){
+        return chapitreService.getQuizByChapite(chapitreId);
+    }
 }
 
