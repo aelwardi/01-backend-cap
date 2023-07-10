@@ -1,11 +1,14 @@
 package com.cagemini.lifescience.rest;
 
+import com.cagemini.lifescience.entity.Proposition;
 import com.cagemini.lifescience.entity.Quiz;
 import com.cagemini.lifescience.model.ApiResponse;
 import com.cagemini.lifescience.service.QuizServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class QuizController {
@@ -34,5 +37,10 @@ public class QuizController {
     public ApiResponse deleteQuiz(@PathVariable Long theId, @PathVariable Long chapitreId){
         quizService.deleteById(theId, chapitreId);
         return ( new ApiResponse("Deleted quiz id :" + theId));
+    }
+
+    @GetMapping("/quiz/{quizId}/propositions")
+    public List<Proposition> getPropositionByQuiz(@PathVariable Long quizId){
+        return quizService.getPropositionByQuiz(quizId);
     }
 }

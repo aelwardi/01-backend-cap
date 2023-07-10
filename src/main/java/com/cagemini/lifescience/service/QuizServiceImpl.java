@@ -3,12 +3,15 @@ package com.cagemini.lifescience.service;
 import com.cagemini.lifescience.dao.ChapitreRepository;
 import com.cagemini.lifescience.dao.QuizRepository;
 import com.cagemini.lifescience.entity.Chapitre;
+import com.cagemini.lifescience.entity.Proposition;
 import com.cagemini.lifescience.entity.Quiz;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -70,5 +73,12 @@ public class QuizServiceImpl implements QuizService {
         }
 
         quizRepository.deleteById(theId);
+    }
+
+    @Override
+    public List<Proposition> getPropositionByQuiz(Long quizId) {
+        Quiz quiz = quizRepository.findById(quizId)
+                .orElseThrow(() -> new IllegalArgumentException("Quiz not found with ID : " + quizId));
+        return new ArrayList<>(quiz.getPropositions());
     }
 }
