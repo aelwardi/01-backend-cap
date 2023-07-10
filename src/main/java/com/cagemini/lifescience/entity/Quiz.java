@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "quiz")
@@ -20,14 +21,18 @@ public class Quiz {
     @JsonIgnore
     private Chapitre chapitre;
 
+    @OneToMany(mappedBy = "quiz")
+    private List<Proposition> propositions;
+
     public Quiz() {
     }
 
-    public Quiz(String question, Date dateCreated, Date dateUpdated, Chapitre chapitre) {
+    public Quiz(String question, Date dateCreated, Date dateUpdated, Chapitre chapitre, List<Proposition> propositions) {
         this.question = question;
         this.dateCreated = dateCreated;
         this.dateUpdated = dateUpdated;
         this.chapitre = chapitre;
+        this.propositions = propositions;
     }
 
     public Long getId() {
@@ -68,5 +73,13 @@ public class Quiz {
 
     public void setChapitre(Chapitre chapitre) {
         this.chapitre = chapitre;
+    }
+
+    public List<Proposition> getPropositions() {
+        return propositions;
+    }
+
+    public void setPropositions(List<Proposition> propositions) {
+        this.propositions = propositions;
     }
 }
