@@ -1,6 +1,7 @@
 package com.cagemini.lifescience.service;
 
 
+import com.cagemini.lifescience.dao.ChapitreRepository;
 import com.cagemini.lifescience.dao.CoursRepository;
 import com.cagemini.lifescience.dao.ProjetRepository;
 import com.cagemini.lifescience.entity.Chapitre;
@@ -17,14 +18,13 @@ import java.util.Optional;
 @Service
 public class CoursServiceImpl implements CoursService{
 
-    private CoursRepository coursRepository;
+    private final CoursRepository coursRepository;
     private final ProjetRepository projetRepository;
-
 
     @Autowired
     public CoursServiceImpl(CoursRepository theCoursRepository,ProjetRepository projetRepository){
 
-        coursRepository=theCoursRepository;
+        this.coursRepository=theCoursRepository;
         this.projetRepository=projetRepository;
     }
     @Autowired

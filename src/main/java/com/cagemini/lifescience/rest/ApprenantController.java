@@ -25,10 +25,11 @@ public class ApprenantController {
 
 
     //export "/Apprenants"and return a list of Apprenants
+    /*
     @GetMapping("/apprenants")
     public List<Apprenant> findAll (){
         return apprenantService.findAll();
-    }
+    }*/
 
 //    @GetMapping("/departements")
 //    public List<Departement> findAllDepartement (){

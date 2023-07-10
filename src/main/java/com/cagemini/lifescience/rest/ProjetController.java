@@ -3,6 +3,7 @@ package com.cagemini.lifescience.rest;
 import com.cagemini.lifescience.entity.Projet;
 import com.cagemini.lifescience.model.ApiResponse;
 import com.cagemini.lifescience.service.ProjetService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,6 +14,7 @@ public class ProjetController {
 
     private ProjetService projetService;
 
+    @Autowired
     public ProjetController(ProjetService projetService) {
         this.projetService = projetService;
     }
@@ -36,7 +38,7 @@ public class ProjetController {
     }
 
     @DeleteMapping("/projets/{projetId}")
-    public ApiResponse deleteDelete(@PathVariable Long projetId){
+    public ApiResponse deleteProjet(@PathVariable Long projetId){
         Projet theProjet = projetService.findById(projetId);
 
         //throw exception if null
