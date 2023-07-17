@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:4200/")
 public class ChapitreController {
     private ChapitreService chapitreService;
 
@@ -58,11 +58,6 @@ public class ChapitreController {
         chapitreService.deleteById(chapitreId);
         return ( new ApiResponse("deleted chapitre id :" +chapitreId));
 
-    }
-
-    @GetMapping("/chapitres/{chapitreId}/quiz")
-    public List<Quiz> getQuizByChapitre(@PathVariable Long chapitreId){
-        return chapitreService.getQuizByChapite(chapitreId);
     }
 }
 

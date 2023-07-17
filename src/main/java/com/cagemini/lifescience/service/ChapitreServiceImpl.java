@@ -56,13 +56,6 @@ public class ChapitreServiceImpl implements ChapitreService {
         chapitreRepository.deleteById(theId);
     }
 
-    @Override
-    public List<Quiz> getQuizByChapite(Long chapitreId) {
-        Chapitre chapitre = chapitreRepository.findById(chapitreId)
-                .orElseThrow(() -> new IllegalArgumentException("Chapitre not found with ID: " + chapitreId));
-
-        return new ArrayList<>(chapitre.getQuiz());
-    }
 
 }
 
