@@ -3,6 +3,7 @@ package com.cagemini.lifescience.rest;
 import com.cagemini.lifescience.entity.Proposition;
 import com.cagemini.lifescience.entity.Quiz;
 import com.cagemini.lifescience.model.ApiResponse;
+import com.cagemini.lifescience.model.QuizDTO;
 import com.cagemini.lifescience.service.QuizServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:4200/")
 public class QuizController {
 
     private QuizServiceImpl quizService;
@@ -39,8 +41,13 @@ public class QuizController {
         return ( new ApiResponse("Deleted quiz id :" + theId));
     }
 
-    @GetMapping("/quiz/{quizId}/propositions")
-    public List<Proposition> getPropositionByQuiz(@PathVariable Long quizId){
-        return quizService.getPropositionByQuiz(quizId);
+    @PostMapping("/quiz_proposal")
+    public Quiz addQuizWithPropositions(@RequestBody QuizDTO quizDTO, @RequestParam Long chapitreId) {
+        return quizService.addQuizWithPropositions(quizDTO.getQuiz(), quizDTO.getPropositions(), chapitreId);
+    }
+
+    @GetMapping("quiz")
+    public List<QuizDTO> getQuizByChapitre(@RequestParam Long chapitreId){
+        return quizService.getQuizWithPropositionsByChapitreId(chapitreId);
     }
 }

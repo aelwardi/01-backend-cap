@@ -12,7 +12,6 @@ public interface ChapitreService {
     Chapitre save(Chapitre theChapitre);
     Chapitre updateChapitre(Chapitre theChapitre);
     void deleteById(Long theId);
-    List<Quiz> getQuizByChapite(Long chapitreId);
 
 
     //List<Section> getSectionByChapitre(Long ChapitreId);

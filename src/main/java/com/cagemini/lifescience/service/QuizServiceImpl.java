@@ -1,10 +1,12 @@
 package com.cagemini.lifescience.service;
 
 import com.cagemini.lifescience.dao.ChapitreRepository;
+import com.cagemini.lifescience.dao.PropositionRepository;
 import com.cagemini.lifescience.dao.QuizRepository;
 import com.cagemini.lifescience.entity.Chapitre;
 import com.cagemini.lifescience.entity.Proposition;
 import com.cagemini.lifescience.entity.Quiz;
+import com.cagemini.lifescience.model.QuizDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,12 +21,14 @@ import java.util.Optional;
 public class QuizServiceImpl implements QuizService {
 
     private final QuizRepository quizRepository;
+    private final PropositionRepository propositionRepository;
     private final ChapitreRepository chapitreRepository;
 
     @Autowired
-    public QuizServiceImpl(QuizRepository quizRepository, ChapitreRepository chapitreRepository) {
+    public QuizServiceImpl(QuizRepository quizRepository, ChapitreRepository chapitreRepository, PropositionRepository propositionRepository) {
         this.quizRepository = quizRepository;
         this.chapitreRepository = chapitreRepository;
+        this.propositionRepository = propositionRepository;
     }
 
     @Override
@@ -75,10 +79,37 @@ public class QuizServiceImpl implements QuizService {
         quizRepository.deleteById(theId);
     }
 
+
     @Override
-    public List<Proposition> getPropositionByQuiz(Long quizId) {
-        Quiz quiz = quizRepository.findById(quizId)
-                .orElseThrow(() -> new IllegalArgumentException("Quiz not found with ID : " + quizId));
-        return new ArrayList<>(quiz.getPropositions());
+    public Quiz addQuizWithPropositions(Quiz quiz, List<Proposition> propositions, Long chapitreId) {
+        quiz.setPropositions(propositions);
+        Chapitre chapitre = chapitreRepository.findById(chapitreId)
+                .orElseThrow(() -> new IllegalArgumentException("Chapitre not found with ID: " + chapitreId));
+        quiz.setChapitre(chapitre);
+        quiz.setDateCreated(new Date());
+        quiz.setDateUpdated(new Date());
+        quiz = quizRepository.save(quiz);
+
+        for (Proposition proposition: propositions){
+            proposition.setQuiz(quiz);
+            propositionRepository.save(proposition);
+        }
+
+        return quiz;
     }
+
+    @Override
+    public List<QuizDTO> getQuizWithPropositionsByChapitreId(Long chapitreId) {
+        List<Quiz> quizzes = quizRepository.findByChapitreId(chapitreId);
+        List<QuizDTO> quizDTOs = new ArrayList<>();
+
+        for (Quiz quiz : quizzes) {
+            List<Proposition> propositions = propositionRepository.findByQuizId(quiz.getId());
+            QuizDTO quizDTO = new QuizDTO(quiz, propositions);
+            quizDTOs.add(quizDTO);
+        }
+
+        return quizDTOs;
+    }
+
 }
