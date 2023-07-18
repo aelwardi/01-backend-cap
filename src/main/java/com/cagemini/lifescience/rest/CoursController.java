@@ -58,18 +58,24 @@ public class CoursController {
     }
 
     // Update a course associated with a project
-    @PutMapping("/cours/{coursId}")
-    public Cours updateCourse(@PathVariable("coursId") Long coursId, @RequestParam("projetId") Long projetId, @RequestBody Cours updatedCourse) {
-        Projet projet = projetRepository.findById(projetId)
-                .orElseThrow(() -> new ResourceNotFoundException("Projet not found with ID: " + projetId));
-
-        Cours existingCourse = coursService.findById(coursId);
-        existingCourse.setProjet(projet);
-        existingCourse.setTitle(updatedCourse.getTitle());
-        // Update other course properties as needed
-
-        return coursService.save(existingCourse);
+//    @PutMapping("/cours/{coursId}")
+//    public Cours updateCourse(@PathVariable("coursId") Long coursId, @RequestParam("projetId") Long projetId, @RequestBody Cours updatedCourse) {
+//        Projet projet = projetRepository.findById(projetId)
+//                .orElseThrow(() -> new ResourceNotFoundException("Projet not found with ID: " + projetId));
+//
+//        Cours existingCourse = coursService.findById(coursId);
+//        existingCourse.setProjet(projet);
+//        existingCourse.setTitle(updatedCourse.getTitle());
+//        // Update other course properties as needed
+//
+//        return coursService.save(existingCourse);
+//    }
+    @PutMapping("/cours/{id}")
+    public Cours updateCourse(@PathVariable Long id,@RequestBody Cours theCours){
+        theCours.setId(id);
+        return coursService.updateCours(theCours);
     }
+
 
 
 

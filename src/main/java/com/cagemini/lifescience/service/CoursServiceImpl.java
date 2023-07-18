@@ -4,7 +4,11 @@ package com.cagemini.lifescience.service;
 import com.cagemini.lifescience.dao.ChapitreRepository;
 import com.cagemini.lifescience.dao.CoursRepository;
 import com.cagemini.lifescience.dao.ProjetRepository;
+
+import com.cagemini.lifescience.entity.Apprenant;
+
 import com.cagemini.lifescience.entity.Chapitre;
+
 import com.cagemini.lifescience.entity.Cours;
 import com.cagemini.lifescience.entity.Projet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,20 +71,26 @@ public class CoursServiceImpl implements CoursService{
         }
 
 
+//    @Override
+//    public Cours updateCours(Long coursId, Long projetId, Cours updatedCourse) {
+//        Projet projet = projetRepository.findById(projetId)
+//                .orElseThrow(() -> new ResourceNotFoundException("Projet not found with ID: " + projetId));
+//
+//        Cours existingCourse = coursRepository.findById(coursId)
+//                .orElseThrow(() -> new ResourceNotFoundException("Cours not found with ID: " + coursId));
+//
+//        existingCourse.setProjet(projet);
+//        existingCourse.setTitle(updatedCourse.getTitle());
+//        // Update other course properties as needed
+//
+//        return coursRepository.save(existingCourse);
+//    }
     @Override
-    public Cours updateCours(Long coursId, Long projetId, Cours updatedCourse) {
-        Projet projet = projetRepository.findById(projetId)
-                .orElseThrow(() -> new ResourceNotFoundException("Projet not found with ID: " + projetId));
-
-        Cours existingCourse = coursRepository.findById(coursId)
-                .orElseThrow(() -> new ResourceNotFoundException("Cours not found with ID: " + coursId));
-
-        existingCourse.setProjet(projet);
-        existingCourse.setTitle(updatedCourse.getTitle());
-        // Update other course properties as needed
-
-        return coursRepository.save(existingCourse);
+    public Cours updateCours(Cours theCours) {
+        return coursRepository.save(theCours );
     }
+
+
 
     @Override
     public List<Cours> searchByTitle(@RequestParam("term") String term) {

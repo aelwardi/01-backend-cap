@@ -1,7 +1,11 @@
 package com.cagemini.lifescience.service;
 
 
+
+import com.cagemini.lifescience.entity.Apprenant;
+
 import com.cagemini.lifescience.entity.Chapitre;
+
 import com.cagemini.lifescience.entity.Cours;
 import com.cagemini.lifescience.entity.Projet;
 
@@ -17,9 +21,10 @@ public interface CoursService {
 //add courses to project
     Cours addCoursToProjet(Long projetId, Cours cours);
     Cours save(Cours theCours);
+    Cours updateCours(Cours theCours);
 
     // update courses by projet
-    Cours updateCours(Long coursId, Long projetId, Cours updatedCourse);
+    //Cours updateCours(Long coursId, Long projetId, Cours updatedCourse);
 
     List<Cours> searchByTitle(String term);
 
