@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:4200/")
 
 public class DepartementController {
 
@@ -68,6 +68,7 @@ public class DepartementController {
     ) {
         return departementService.findByLastNameContaining(name, page);
     }
+
 
     @GetMapping("/departements/{departementId}/projets")
     public List<Projet> getProjetsByDepartement(@PathVariable Long departementId) {

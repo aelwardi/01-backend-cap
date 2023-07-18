@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:4200/")
 
 public class ApprenantController {
 
@@ -25,10 +25,11 @@ public class ApprenantController {
 
 
     //export "/Apprenants"and return a list of Apprenants
+    /*
     @GetMapping("/apprenants")
     public List<Apprenant> findAll (){
         return apprenantService.findAll();
-    }
+    }*/
 
 //    @GetMapping("/departements")
 //    public List<Departement> findAllDepartement (){

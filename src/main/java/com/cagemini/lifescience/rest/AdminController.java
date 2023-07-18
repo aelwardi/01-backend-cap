@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Set;
 
+
 @RestController
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:4200/")
 public class AdminController {
 
     private AdminService adminService;
