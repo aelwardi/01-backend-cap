@@ -15,14 +15,14 @@ public class Chapitre {
     private String titre;
     private Date dateCreation;
     private Date dateUpdate;
-    private Long tempsEstimer;
+    private Date tempsEstimer;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "Cours_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "Cours_id")
     @JsonIgnore
     private Cours cours;
 
-    @OneToMany(mappedBy = "chapitre")
+    @OneToMany(mappedBy = "chapitre", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Quiz> quiz;
 
@@ -33,7 +33,8 @@ public class Chapitre {
     public Chapitre() {
     }
 
-    public Chapitre(String titre, Date dateCreation, Date dateUpdate, Long tempsEstimer, Cours cours, List<Quiz> quiz, List<Section> section) {
+    public Chapitre(Long id, String titre, Date dateCreation, Date dateUpdate, Date tempsEstimer, Cours cours, List<Quiz> quiz, List<Section> section) {
+        this.id = id;
         this.titre = titre;
         this.dateCreation = dateCreation;
         this.dateUpdate = dateUpdate;
@@ -75,11 +76,11 @@ public class Chapitre {
         this.dateUpdate = dateUpdate;
     }
 
-    public Long getTempsEstimer() {
+    public Date getTempsEstimer() {
         return tempsEstimer;
     }
 
-    public void setTempsEstimer(Long tempsEstimer) {
+    public void setTempsEstimer(Date tempsEstimer) {
         this.tempsEstimer = tempsEstimer;
     }
 

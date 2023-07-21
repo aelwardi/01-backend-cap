@@ -1,5 +1,6 @@
 package com.cagemini.lifescience.rest;
 
+import com.cagemini.lifescience.dao.CoursRepository;
 import com.cagemini.lifescience.entity.Chapitre;
 import com.cagemini.lifescience.entity.Quiz;
 import com.cagemini.lifescience.model.ApiResponse;
@@ -12,10 +13,11 @@ import java.util.List;
 @CrossOrigin("http://localhost:4200/")
 public class ChapitreController {
     private ChapitreService chapitreService;
+    private CoursRepository coursRepository;
 
-    public ChapitreController(ChapitreService thechapitreService) {
-
-        chapitreService = thechapitreService;
+    public ChapitreController(ChapitreService chapitreService, CoursRepository coursRepository) {
+        this.chapitreService = chapitreService;
+        this.coursRepository = coursRepository;
     }
 
     @GetMapping("/chapitres")
@@ -36,9 +38,9 @@ public class ChapitreController {
     }
 
     @PostMapping("/chapitres")
-    public Chapitre addChapitre(@RequestBody Chapitre theChapitre){
+    public Chapitre addChapitre(@RequestParam Long coursId,@RequestBody Chapitre theChapitre){
         theChapitre.setId(0l);
-        Chapitre dbChapitre = chapitreService.save(theChapitre);
+        Chapitre dbChapitre = chapitreService.save(coursId,theChapitre);
         return dbChapitre;
     }
 
@@ -48,16 +50,10 @@ public class ChapitreController {
         return chapitreService.updateChapitre(theChapitre);
     }
 
-    @DeleteMapping("/chapitres/{chapitreId}")
-    public ApiResponse deleteChapitre(@PathVariable Long chapitreId){
-        Chapitre theChapitre = chapitreService.findById(chapitreId);
-
-        if(theChapitre == null){
-            throw new RuntimeException("the chapitre id not found "+chapitreId);
-        }
-        chapitreService.deleteById(chapitreId);
-        return ( new ApiResponse("deleted chapitre id :" +chapitreId));
-
+    @DeleteMapping("/chapitres/{theId}/{coursId}")
+    public ApiResponse deleteChapitre(@PathVariable Long theId, @PathVariable Long coursId){
+        chapitreService.deleteById(theId, coursId);
+        return ( new ApiResponse("Deleted chapitre id :" + theId));
     }
 }
 
