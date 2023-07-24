@@ -73,11 +73,13 @@ public class AdminController {
 //        return dbAdmin;
 //
 //    }
+
     @PutMapping("/admins/{id}")
-    public Admin updateAdmin(@PathVariable Long id,@RequestBody Admin theAdmin){
-        theAdmin.setId(id);
+    public Admin updateAdmin(@PathVariable Long id, @RequestBody Admin theAdmin) {
+        theAdmin.setId(id); // Set the ID received from the path to the Admin object
         return adminService.updateAdmin(theAdmin);
     }
+
 
     @DeleteMapping("/admins/{adminId}")
     public  String deleteAdmin(@PathVariable Long adminId){

@@ -21,7 +21,7 @@ public interface CoursService {
 //add courses to project
     Cours addCoursToProjet(Long projetId, Cours cours);
     Cours save(Cours theCours);
-    Cours updateCours(Cours theCours);
+    Cours updateCours(Cours theCours,Long projectId);
 
     // update courses by projet
     //Cours updateCours(Long coursId, Long projetId, Cours updatedCourse);

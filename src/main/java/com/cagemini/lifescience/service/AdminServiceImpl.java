@@ -60,9 +60,8 @@ public class AdminServiceImpl implements AdminService{
 
     @Override
     public Admin updateAdmin(Admin theAdmin) {
-        return adminRepository.save(theAdmin );
+        return adminRepository.save(theAdmin);
     }
-
     @Override
     public List<Admin> searchByNameOrLastName(@RequestParam("term") String term) {
         return adminRepository.searchByNameOrLastName(term);

@@ -23,6 +23,14 @@ public class ProjetController {
     public List<Projet> searchProjetByNameOrNameClientAndDepartementId(@RequestParam String term, @RequestParam Long departementId) {
         return projetService.searchByNameOrNameClientAndDepartementId(term, departementId);
     }
+    @GetMapping("/projects/{id}")
+    public Projet getProjectById(@PathVariable Long id){
+        Projet projetById = this.projetService.findById(id);
+        if (projetById == null){
+            throw new RuntimeException("the project id not found "+id);
+        }
+        return projetById;
+    }
 
     @PostMapping("/projets" )
     public Projet addProjet(@RequestBody Projet theProjet){
