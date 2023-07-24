@@ -15,25 +15,33 @@ public class Chapitre {
     private String titre;
     private Date dateCreation;
     private Date dateUpdate;
-    private Long tempsEstimer;
+    private Date tempsEstimer;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "Cours_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "Cours_id")
+    @JsonIgnore
     private Cours cours;
 
-    @OneToMany(mappedBy = "chapitre")
+    @OneToMany(mappedBy = "chapitre", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Quiz> quiz;
+
+    @OneToMany(mappedBy = "chapitre")
+    @JsonIgnore
+    private List<Section> section;
 
     public Chapitre() {
     }
 
-    public Chapitre(String titre, Date dateCreation, Date dateUpdate, Long tempsEstimer, Cours cours, List<Quiz> quiz) {
+    public Chapitre(Long id, String titre, Date dateCreation, Date dateUpdate, Date tempsEstimer, Cours cours, List<Quiz> quiz, List<Section> section) {
+        this.id = id;
         this.titre = titre;
         this.dateCreation = dateCreation;
         this.dateUpdate = dateUpdate;
         this.tempsEstimer = tempsEstimer;
         this.cours = cours;
         this.quiz = quiz;
+        this.section = section;
     }
 
     public Long getId() {
@@ -68,11 +76,11 @@ public class Chapitre {
         this.dateUpdate = dateUpdate;
     }
 
-    public Long getTempsEstimer() {
+    public Date getTempsEstimer() {
         return tempsEstimer;
     }
 
-    public void setTempsEstimer(Long tempsEstimer) {
+    public void setTempsEstimer(Date tempsEstimer) {
         this.tempsEstimer = tempsEstimer;
     }
 
@@ -90,6 +98,14 @@ public class Chapitre {
 
     public void setQuiz(List<Quiz> quiz) {
         this.quiz = quiz;
+    }
+
+    public List<Section> getSection() {
+        return section;
+    }
+
+    public void setSection(List<Section> section) {
+        this.section = section;
     }
 }
 

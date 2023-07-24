@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -34,11 +35,12 @@ public class Cours {
     @JoinColumn(name = "projet_id")
     private Projet projet;
 
-    @OneToMany(mappedBy = "cours" , cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "cours" , cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonIgnore
-    private Set<Chapitre> chapitres;
+    private List<Chapitre> chapitres;
 
-    public Cours(Long id, String title, String description, Date dateCreate, Date dateMAJ, Date estimateTime, String actor, String url, Projet projet) {
+
+    public Cours(Long id, String title, String description, Date dateCreate, Date dateMAJ, Date estimateTime, String actor, String url, Projet projet, List<Chapitre> chapitres) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -48,6 +50,7 @@ public class Cours {
         this.actor = actor;
         this.url = url;
         this.projet = projet;
+        this.chapitres = chapitres;
     }
 
     public Cours(){
@@ -70,7 +73,14 @@ public class Cours {
         this.title = title;
     }
 
-    public Set<Chapitre> getChapitrs(){ return chapitres;}
+
+    public List<Chapitre> getChapitres() {
+        return chapitres;
+    }
+
+    public void setChapitres(List<Chapitre> chapitres) {
+        this.chapitres = chapitres;
+    }
 
     public String getDescription() {
         return description;

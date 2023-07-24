@@ -14,12 +14,14 @@ import com.cagemini.lifescience.entity.Projet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @Service
+@Transactional
 public class CoursServiceImpl implements CoursService{
 
     private final CoursRepository coursRepository;
@@ -111,6 +113,6 @@ public Cours updateCours(Cours theCours ,Long projectId) {
         Cours theCours = coursRepository.findById(courId)
                 .orElseThrow(() -> new IllegalArgumentException("Cours not found with ID: " + courId));
 
-        return new ArrayList<>(theCours.getChapitrs());
+        return new ArrayList<>(theCours.getChapitres());
     }
 }

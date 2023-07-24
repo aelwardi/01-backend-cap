@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Set;
 
 @Repository
-
 @CrossOrigin("http://localhost:4200/")
 public interface ApprenantRepository extends JpaRepository<Apprenant,Long> {
     @Query("SELECT a FROM Apprenant a WHERE a.firstName LIKE %:term% OR a.lastName LIKE %:term%")

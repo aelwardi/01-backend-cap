@@ -11,7 +11,7 @@ public interface QuizService {
 
     Quiz save(Long chapitreId, Quiz theQuiz);
     Optional<Quiz> findById(Long theId);
-    public Quiz updateQuiz(Long chapitreId, Long quizId, Quiz updatedQuiz);
+    Quiz updateQuiz(Long chapitreId, Long quizId, Quiz updatedQuiz);
     void  deleteById(Long theId, Long chapitreId);
     public Quiz addQuizWithPropositions(Quiz quiz, List<Proposition> propositions, Long chapitreId);
     List<QuizDTO> getQuizWithPropositionsByChapitreId(Long chapitreId);
