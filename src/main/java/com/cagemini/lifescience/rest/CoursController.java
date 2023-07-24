@@ -70,12 +70,15 @@ public class CoursController {
 //
 //        return coursService.save(existingCourse);
 //    }
-    @PutMapping("/cours/{id}")
-    public Cours updateCourse(@PathVariable Long id,@RequestBody Cours theCours){
+    @PutMapping("/cours/{id}/project/{projectId}")
+    public Cours updateCourse(@PathVariable Long id,@PathVariable Long projectId,@RequestBody Cours theCours){
         theCours.setId(id);
-        return coursService.updateCours(theCours);
-    }
+        //set the project in the cour again
+        //System.out.println("project id : " + projectId);
+        //theCours.setProjet(projetService.findById(projectId));
 
+        return coursService.updateCours(theCours , projectId);
+    }
 
 
 

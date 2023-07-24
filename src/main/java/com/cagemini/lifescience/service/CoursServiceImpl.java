@@ -87,11 +87,14 @@ public class CoursServiceImpl implements CoursService{
 //
 //        return coursRepository.save(existingCourse);
 //    }
-    @Override
-    public Cours updateCours(Cours theCours) {
-        return coursRepository.save(theCours );
+@Override
+public Cours updateCours(Cours theCours ,Long projectId) {
+    Optional<Projet> projectOfCource = projetRepository.findById(projectId);
+    if (projectOfCource.isPresent()){
+        theCours.setProjet(projectOfCource.get());
     }
-
+    return coursRepository.save(theCours );
+}
 
 
     @Override
