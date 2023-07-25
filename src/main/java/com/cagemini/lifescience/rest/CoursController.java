@@ -1,6 +1,5 @@
 package com.cagemini.lifescience.rest;
 import com.cagemini.lifescience.dao.ProjetRepository;
-import com.cagemini.lifescience.entity.Apprenant;
 import com.cagemini.lifescience.entity.Chapitre;
 import com.cagemini.lifescience.entity.Cours;
 import com.cagemini.lifescience.entity.Projet;

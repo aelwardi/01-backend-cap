@@ -7,6 +7,7 @@ import com.cagemini.lifescience.dao.QuizRepository;
 import com.cagemini.lifescience.entity.Chapitre;
 import com.cagemini.lifescience.entity.Cours;
 import com.cagemini.lifescience.entity.Quiz;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,6 +62,17 @@ public class ChapitreServiceImpl implements ChapitreService {
         theChapitre.setCours(cours);
         return chapitreRepository.save(theChapitre);
     }
+    @Override
+    public Chapitre addChapitreToCours(Long coursId, Chapitre chapitre) {
+        // Récupérer le cours auquel le chapitre doit être associé
+        Cours cours = coursRepository.findById(coursId).orElseThrow(() -> new RuntimeException("Cours not found with id: " + coursId));
+
+        // Associer le chapitre au cours
+        chapitre.setCours(cours);
+
+        // Enregistrer le chapitre
+        return chapitreRepository.save(chapitre);
+    }
 
     @Override
     public Chapitre updateChapitre(Chapitre theChapitre) {
@@ -68,9 +80,9 @@ public class ChapitreServiceImpl implements ChapitreService {
         return chapitreRepository.save(theChapitre);
     }
 
+
     @Override
     public void deleteById(Long theId, Long coursId) {
-
         Cours cours = coursRepository.findById(coursId)
                 .orElseThrow(() -> new IllegalArgumentException("cours not found with ID : " + coursId));
         Chapitre chapitre = chapitreRepository.findById(theId)
@@ -80,6 +92,12 @@ public class ChapitreServiceImpl implements ChapitreService {
         }
 
         chapitreRepository.deleteById(theId);
+    }
+
+    @Override
+    public List<Chapitre> getChapitreByCoursId(Long coursId) {
+        // Utilisez le repository pour chercher les chapitres par ID de cours
+        return chapitreRepository.findByCoursId(coursId);
     }
 
 

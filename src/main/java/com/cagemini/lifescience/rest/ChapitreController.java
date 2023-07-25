@@ -2,7 +2,6 @@ package com.cagemini.lifescience.rest;
 
 import com.cagemini.lifescience.dao.CoursRepository;
 import com.cagemini.lifescience.entity.Chapitre;
-import com.cagemini.lifescience.entity.Quiz;
 import com.cagemini.lifescience.model.ApiResponse;
 import com.cagemini.lifescience.service.ChapitreService;
 import org.springframework.web.bind.annotation.*;
@@ -36,12 +35,22 @@ public class ChapitreController {
             return theChapitre;
 
     }
+    @GetMapping("/chapitres/cours/{coursId}")
+    public List<Chapitre> getChapitresByCoursId(@PathVariable Long coursId) {
+        return chapitreService.getChapitreByCoursId(coursId);
+    }
 
     @PostMapping("/chapitres")
-    public Chapitre addChapitre(@RequestParam Long coursId,@RequestBody Chapitre theChapitre){
+    public Chapitre addChapitre(@RequestParam Long coursId, @RequestBody Chapitre theChapitre){
         theChapitre.setId(0l);
         Chapitre dbChapitre = chapitreService.save(coursId,theChapitre);
         return dbChapitre;
+    }
+
+    // Ajouter un chapitre à un cours
+    @PostMapping("/chapitres/cours/{coursId}")
+    public Chapitre addChapitreToCours(@PathVariable Long coursId, @RequestBody Chapitre newChapitre) {
+        return chapitreService.addChapitreToCours(coursId, newChapitre);
     }
 
     @PutMapping("/chapitres/{id}")

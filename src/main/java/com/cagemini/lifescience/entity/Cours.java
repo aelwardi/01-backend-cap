@@ -35,7 +35,7 @@ public class Cours {
     @JoinColumn(name = "projet_id")
     private Projet projet;
 
-    @OneToMany(mappedBy = "cours" , cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "cours" , cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Chapitre> chapitres;
 
