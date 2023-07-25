@@ -1,11 +1,8 @@
 package com.cagemini.lifescience.service;
 
 import com.cagemini.lifescience.dao.ChapitreRepository;
-import com.cagemini.lifescience.dao.CoursRepository;
 import com.cagemini.lifescience.dao.SectionRepository;
 import com.cagemini.lifescience.entity.Chapitre;
-import com.cagemini.lifescience.entity.Cours;
-import com.cagemini.lifescience.entity.Quiz;
 import com.cagemini.lifescience.entity.Section;
 import com.cagemini.lifescience.model.ChapitreDTO;
 import org.springframework.beans.factory.annotation.Autowired;

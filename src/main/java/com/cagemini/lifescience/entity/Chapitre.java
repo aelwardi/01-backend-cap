@@ -13,29 +13,28 @@ public class Chapitre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String titre;
+    private String description;
     private Date dateCreation;
     private Date dateUpdate;
     private Date tempsEstimer;
 
     @ManyToOne
     @JoinColumn(name = "Cours_id")
-    @JsonIgnore
     private Cours cours;
 
     @OneToMany(mappedBy = "chapitre", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JsonIgnore
     private List<Quiz> quiz;
 
-    @OneToMany(mappedBy = "chapitre")
-    @JsonIgnore
+    @OneToMany(mappedBy = "chapitre", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Section> section;
 
     public Chapitre() {
     }
 
-    public Chapitre(Long id, String titre, Date dateCreation, Date dateUpdate, Date tempsEstimer, Cours cours, List<Quiz> quiz, List<Section> section) {
+    public Chapitre(Long id, String titre, String description, Date dateCreation, Date dateUpdate, Date tempsEstimer, Cours cours, List<Quiz> quiz, List<Section> section) {
         this.id = id;
         this.titre = titre;
+        this.description = description;
         this.dateCreation = dateCreation;
         this.dateUpdate = dateUpdate;
         this.tempsEstimer = tempsEstimer;
@@ -58,6 +57,14 @@ public class Chapitre {
 
     public void setTitre(String titre) {
         this.titre = titre;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Date getDateCreation() {
@@ -108,4 +115,3 @@ public class Chapitre {
         this.section = section;
     }
 }
-
