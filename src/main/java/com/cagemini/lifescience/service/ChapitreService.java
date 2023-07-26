@@ -10,7 +10,7 @@ public interface ChapitreService {
     Chapitre findById(Long theId);
     Chapitre save(Long coursId,Chapitre theChapitre);
     Chapitre addChapitreToCours(Long coursId, Chapitre chapitre);
-    Chapitre updateChapitre(Chapitre theChapitre);
+    Chapitre updateChapitre(Chapitre theChapitre, Long theId);
     void deleteById(Long theId, Long coursId);
     List<Chapitre> getChapitreByCoursId(Long coursId);
 

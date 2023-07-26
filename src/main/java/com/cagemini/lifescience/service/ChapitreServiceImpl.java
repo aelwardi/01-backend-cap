@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -56,7 +53,6 @@ public class ChapitreServiceImpl implements ChapitreService {
 
     @Override
     public Chapitre save(Long coursId,Chapitre theChapitre) {
-
         Cours cours = coursRepository.findById(coursId)
                 .orElseThrow(() -> new IllegalArgumentException("cours not found : " +coursId ));
         theChapitre.setCours(cours);
@@ -66,7 +62,8 @@ public class ChapitreServiceImpl implements ChapitreService {
     public Chapitre addChapitreToCours(Long coursId, Chapitre chapitre) {
         // Récupérer le cours auquel le chapitre doit être associé
         Cours cours = coursRepository.findById(coursId).orElseThrow(() -> new RuntimeException("Cours not found with id: " + coursId));
-
+        chapitre.setDateCreation(new Date());
+        chapitre.setDateUpdate(new Date());
         // Associer le chapitre au cours
         chapitre.setCours(cours);
 
@@ -75,9 +72,18 @@ public class ChapitreServiceImpl implements ChapitreService {
     }
 
     @Override
-    public Chapitre updateChapitre(Chapitre theChapitre) {
+    public Chapitre updateChapitre(Chapitre theChapitre, Long theId) {
 
-        return chapitreRepository.save(theChapitre);
+        Chapitre existingChapitre = chapitreRepository.findById(theId).orElse(null);
+
+        if (existingChapitre != null) {
+            existingChapitre.setTitre(theChapitre.getTitre());
+            existingChapitre.setDescription(theChapitre.getDescription());
+
+            return chapitreRepository.save(existingChapitre);
+        } else {
+            throw new EntityNotFoundException("Chapitre not found with id: \" : " + theId);
+        }
     }
 
 

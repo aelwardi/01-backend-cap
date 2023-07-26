@@ -16,7 +16,7 @@ public class Chapitre {
     private String description;
     private Date dateCreation;
     private Date dateUpdate;
-    private Date tempsEstimer;
+    private Long tempsEstimer;
 
     @ManyToOne
     @JoinColumn(name = "Cours_id")
@@ -31,7 +31,7 @@ public class Chapitre {
     public Chapitre() {
     }
 
-    public Chapitre(Long id, String titre, String description, Date dateCreation, Date dateUpdate, Date tempsEstimer, Cours cours, List<Quiz> quiz, List<Section> section) {
+    public Chapitre(Long id, String titre, String description, Date dateCreation, Date dateUpdate, Long tempsEstimer, Cours cours, List<Quiz> quiz, List<Section> section) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -83,11 +83,11 @@ public class Chapitre {
         this.dateUpdate = dateUpdate;
     }
 
-    public Date getTempsEstimer() {
+    public Long getTempsEstimer() {
         return tempsEstimer;
     }
 
-    public void setTempsEstimer(Date tempsEstimer) {
+    public void setTempsEstimer(Long tempsEstimer) {
         this.tempsEstimer = tempsEstimer;
     }
 
