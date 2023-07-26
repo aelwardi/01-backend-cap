@@ -53,10 +53,9 @@ public class ChapitreController {
         return chapitreService.addChapitreToCours(coursId, newChapitre);
     }
 
-    @PutMapping("/chapitres/{id}")
-    public Chapitre updateChapitre(@PathVariable Long id, @RequestBody Chapitre theChapitre){
-        theChapitre.setId(id);
-        return chapitreService.updateChapitre(theChapitre);
+    @PutMapping("/chapitres/{theId}")
+    public Chapitre updateChapitre(@PathVariable Long theId, @RequestBody Chapitre theChapitre){
+        return chapitreService.updateChapitre(theChapitre, theId);
     }
 
     @DeleteMapping("/chapitres/{theId}/{coursId}")
