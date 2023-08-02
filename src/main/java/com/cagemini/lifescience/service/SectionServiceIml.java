@@ -3,6 +3,7 @@ package com.cagemini.lifescience.service;
 import com.cagemini.lifescience.dao.ChapitreRepository;
 import com.cagemini.lifescience.dao.SectionRepository;
 import com.cagemini.lifescience.entity.Chapitre;
+import com.cagemini.lifescience.entity.Departement;
 import com.cagemini.lifescience.entity.Section;
 import com.cagemini.lifescience.model.ChapitreDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,12 @@ public class SectionServiceIml implements SectionService {
     @Override
     public Optional<Section> findById(Long theId) {
         return Optional.empty();
+    }
+    @Override
+    public Section findByIds(Long theId) {
+        Section section =sectionRepository.findById(theId)
+                .orElseThrow(() -> new IllegalArgumentException("Chapitre not found with ID: " + theId));
+        return section;
     }
 
     @Override

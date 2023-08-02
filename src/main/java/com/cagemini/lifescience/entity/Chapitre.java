@@ -20,12 +20,15 @@ public class Chapitre {
 
     @ManyToOne
     @JoinColumn(name = "Cours_id")
+    @JsonIgnore
     private Cours cours;
 
     @OneToMany(mappedBy = "chapitre", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Quiz> quiz;
 
     @OneToMany(mappedBy = "chapitre", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Section> section;
 
     public Chapitre() {

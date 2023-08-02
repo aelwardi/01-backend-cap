@@ -60,14 +60,12 @@ public class ChapitreServiceImpl implements ChapitreService {
     }
     @Override
     public Chapitre addChapitreToCours(Long coursId, Chapitre chapitre) {
-        // Récupérer le cours auquel le chapitre doit être associé
-        Cours cours = coursRepository.findById(coursId).orElseThrow(() -> new RuntimeException("Cours not found with id: " + coursId));
+        Cours cours = coursRepository.findById(coursId)
+                .orElseThrow(() -> new RuntimeException("Cours not found with id: " + coursId));
         chapitre.setDateCreation(new Date());
         chapitre.setDateUpdate(new Date());
-        // Associer le chapitre au cours
         chapitre.setCours(cours);
 
-        // Enregistrer le chapitre
         return chapitreRepository.save(chapitre);
     }
 
@@ -79,7 +77,7 @@ public class ChapitreServiceImpl implements ChapitreService {
         if (existingChapitre != null) {
             existingChapitre.setTitre(theChapitre.getTitre());
             existingChapitre.setDescription(theChapitre.getDescription());
-
+            existingChapitre.setDateUpdate(new Date());
             return chapitreRepository.save(existingChapitre);
         } else {
             throw new EntityNotFoundException("Chapitre not found with id: \" : " + theId);
