@@ -33,6 +33,12 @@ public class SectionController {
         return sectionService.getChapitresWithSections(cousId);
     }
 
+    @GetMapping("/sections/{theId}")
+    public Section getSectionById(@PathVariable Long theId){
+        return sectionService.findByIds(theId);
+    }
+
+
     @PutMapping("/sections/{chapitreId}/{sectionId}")
     public ResponseEntity<Section> updateQuiz(@PathVariable Long chapitreId, @PathVariable Long sectionId, @RequestBody Section theSection){
         Section dbSection = sectionService.updateSection(chapitreId, sectionId, theSection);

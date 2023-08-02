@@ -13,4 +13,6 @@ public interface SectionService {
     Optional<Section> findById(Long theId);
     Section updateSection(Long chapitreId, Long sectionId, Section theSection);
     void  deleteById(Long theId, Long chapitreId);
+
+    Section findByIds(Long theId);
 }
