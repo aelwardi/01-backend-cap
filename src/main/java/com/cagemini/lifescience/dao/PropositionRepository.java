@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
-@CrossOrigin("http://localhost:4200/")
 @Repository
 public interface PropositionRepository extends JpaRepository<Proposition, Long> {
     List<Proposition> findByQuizId(Long quizId);

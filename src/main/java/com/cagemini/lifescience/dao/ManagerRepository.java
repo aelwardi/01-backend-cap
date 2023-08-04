@@ -13,7 +13,6 @@ import java.util.Set;
 
 
 
-@CrossOrigin("http://localhost:4200/")
 @Repository
 public interface ManagerRepository extends JpaRepository<Manager, Long> {
 

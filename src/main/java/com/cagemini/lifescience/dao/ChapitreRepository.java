@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.List;
 
 @Repository
-@CrossOrigin("http://localhost:4200/")
 public interface ChapitreRepository extends JpaRepository<Chapitre,Long> {
     List<Chapitre> findByCoursId(Long coursId);
 }

@@ -17,7 +17,6 @@ import java.util.Set;
 
 
 @RestController
-@CrossOrigin("http://localhost:4200/")
 public class AdminController {
 
     private AdminService adminService;
