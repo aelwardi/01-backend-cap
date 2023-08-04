@@ -7,6 +7,7 @@ import com.cagemini.lifescience.entity.Departement;
 import com.cagemini.lifescience.entity.Section;
 import com.cagemini.lifescience.model.ChapitreDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -87,6 +88,6 @@ public class SectionServiceIml implements SectionService {
         if(!section.getChapitre().getId().equals(chapitreId)){
             throw new IllegalArgumentException("Section with ID " + theId + " is not associated with Chapitre with ID " + chapitreId);
         }
-        sectionRepository.deleteById(theId);
+        sectionRepository.deleteBySectionIdAndChapitreId(theId, chapitreId);
     }
 }

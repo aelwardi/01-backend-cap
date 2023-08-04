@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
-@CrossOrigin("http://localhost:4200/")
 @Repository
 public interface AdminRepository extends JpaRepository<Admin, Long> {
 //    Page<Admin>findByFirstNameContaining(@Param("firstName") String firstName, Pageable page);

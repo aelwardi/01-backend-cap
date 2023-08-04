@@ -13,7 +13,6 @@ import java.util.Date;
 
 
 @RestController
-@CrossOrigin("http://localhost:4200/")
 public class SuperAdminController {
 
     private SuperAdminService superAdminService;
