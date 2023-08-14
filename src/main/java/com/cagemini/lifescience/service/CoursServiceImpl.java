@@ -1,12 +1,14 @@
 package com.cagemini.lifescience.service;
 
 
+import com.cagemini.lifescience.dao.ChapitreRepository;
 import com.cagemini.lifescience.dao.CoursRepository;
 import com.cagemini.lifescience.dao.ProjetRepository;
 
 import com.cagemini.lifescience.entity.Chapitre;
 import com.cagemini.lifescience.entity.Cours;
 import com.cagemini.lifescience.entity.Projet;
+import com.cagemini.lifescience.model.CoursDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -22,12 +24,14 @@ public class CoursServiceImpl implements CoursService{
 
     private final CoursRepository coursRepository;
     private final ProjetRepository projetRepository;
+    private final ChapitreRepository chapitreRepository;
 
     @Autowired
-    public CoursServiceImpl(CoursRepository theCoursRepository,ProjetRepository projetRepository){
+    public CoursServiceImpl(CoursRepository theCoursRepository,ProjetRepository projetRepository, ChapitreRepository chapitreRepository){
 
         this.coursRepository=theCoursRepository;
         this.projetRepository=projetRepository;
+        this.chapitreRepository=chapitreRepository;
     }
     @Autowired
     public List<Cours> findAll(){
@@ -110,5 +114,14 @@ public Cours updateCours(Cours theCours ,Long projectId) {
                 .orElseThrow(() -> new IllegalArgumentException("Cours not found with ID: " + courId));
 
         return new ArrayList<>(theCours.getChapitres());
+    }
+
+    @Override
+    public CoursDTO getCoursDTOById(Long coursId) {
+        Cours theCours = coursRepository.findById(coursId)
+                .orElseThrow(() -> new IllegalArgumentException("Cours not found with ID: " + coursId));
+        List<Chapitre> chapitres = chapitreRepository.findByCoursId(coursId);
+        CoursDTO coursDTO = new CoursDTO(theCours, chapitres);
+        return coursDTO;
     }
 }

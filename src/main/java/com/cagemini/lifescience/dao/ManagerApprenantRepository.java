@@ -12,4 +12,5 @@ import java.util.List;
 @Repository
 public interface ManagerApprenantRepository extends JpaRepository<ManagerApprenant, ManagerApprenantId> {
     List<ManagerApprenant> findByManager(Manager manager);
+    List<ManagerApprenant> findByManagerId(Long managerId);
 }

@@ -1,5 +1,6 @@
 package com.cagemini.lifescience.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class Manager {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "admin_id", nullable = false)
+    @JsonIgnore
     private Admin admin;
 
     @OneToMany(mappedBy = "manager", fetch = FetchType.EAGER)

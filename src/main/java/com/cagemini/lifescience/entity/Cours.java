@@ -33,6 +33,7 @@ public class Cours {
 
     @ManyToOne
     @JoinColumn(name = "projet_id")
+    @JsonIgnore
     private Projet projet;
 
     @OneToMany(mappedBy = "cours" , cascade = CascadeType.ALL, orphanRemoval = true)

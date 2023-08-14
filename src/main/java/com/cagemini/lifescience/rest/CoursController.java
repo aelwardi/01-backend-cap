@@ -3,6 +3,7 @@ import com.cagemini.lifescience.dao.ProjetRepository;
 import com.cagemini.lifescience.entity.Chapitre;
 import com.cagemini.lifescience.entity.Cours;
 import com.cagemini.lifescience.entity.Projet;
+import com.cagemini.lifescience.model.CoursDTO;
 import com.cagemini.lifescience.service.CoursService;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.web.bind.annotation.*;
@@ -103,5 +104,10 @@ public class CoursController {
     @GetMapping("/cours/{courId}/chapitres")
     public List<Chapitre> getChapitresByCour(@PathVariable Long courId) {
         return coursService.getChapitresByCour(courId);
+    }
+
+    @GetMapping("/coursDTO")
+    public CoursDTO getCoursDTOById(@RequestParam("coursId") Long coursId){
+        return coursService.getCoursDTOById(coursId);
     }
 }
