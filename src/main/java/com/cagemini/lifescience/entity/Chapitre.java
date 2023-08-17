@@ -23,11 +23,11 @@ public class Chapitre {
     @JsonIgnore
     private Cours cours;
 
-    @OneToMany(mappedBy = "chapitre", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "chapitre", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Quiz> quiz;
 
-    @OneToMany(mappedBy = "chapitre", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "chapitre", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Section> section;
 

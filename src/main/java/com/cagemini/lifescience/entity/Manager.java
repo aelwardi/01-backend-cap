@@ -41,7 +41,7 @@ public class Manager {
     @JsonIgnore
     private Admin admin;
 
-    @OneToMany(mappedBy = "manager", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "manager")
     private List<ManagerApprenant> managerApprenants;
 
     public Manager() {
