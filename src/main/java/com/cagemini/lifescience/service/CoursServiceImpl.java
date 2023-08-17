@@ -3,11 +3,10 @@ package com.cagemini.lifescience.service;
 
 import com.cagemini.lifescience.dao.ChapitreRepository;
 import com.cagemini.lifescience.dao.CoursRepository;
+import com.cagemini.lifescience.dao.ManagerRepository;
 import com.cagemini.lifescience.dao.ProjetRepository;
 
-import com.cagemini.lifescience.entity.Chapitre;
-import com.cagemini.lifescience.entity.Cours;
-import com.cagemini.lifescience.entity.Projet;
+import com.cagemini.lifescience.entity.*;
 import com.cagemini.lifescience.model.CoursDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -16,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -25,13 +25,15 @@ public class CoursServiceImpl implements CoursService{
     private final CoursRepository coursRepository;
     private final ProjetRepository projetRepository;
     private final ChapitreRepository chapitreRepository;
+    private final ManagerRepository managerRepository;
 
     @Autowired
-    public CoursServiceImpl(CoursRepository theCoursRepository,ProjetRepository projetRepository, ChapitreRepository chapitreRepository){
+    public CoursServiceImpl(CoursRepository theCoursRepository,ProjetRepository projetRepository, ChapitreRepository chapitreRepository, ManagerRepository managerRepository){
 
         this.coursRepository=theCoursRepository;
         this.projetRepository=projetRepository;
         this.chapitreRepository=chapitreRepository;
+        this.managerRepository = managerRepository;
     }
     @Autowired
     public List<Cours> findAll(){
@@ -68,7 +70,15 @@ public class CoursServiceImpl implements CoursService{
     }
 
         @Override
-        public Cours save(Cours theCours) {
+        public Cours save(Long managerId, Long projetId, Cours theCours) {
+            Projet projet = projetRepository.findById(projetId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Projet not found with ID: " + projetId));
+            Manager manager = managerRepository.findById(managerId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Manager not found with ID: " + managerId));
+            theCours.setProjet(projet);
+            theCours.setManager(manager);
+            theCours.setDateCreate(new Date());
+            theCours.setDateMAJ(new Date());
             return coursRepository.save(theCours);
         }
 
@@ -88,12 +98,18 @@ public class CoursServiceImpl implements CoursService{
 //        return coursRepository.save(existingCourse);
 //    }
 @Override
-public Cours updateCours(Cours theCours ,Long projectId) {
-    Optional<Projet> projectOfCource = projetRepository.findById(projectId);
-    if (projectOfCource.isPresent()){
-        theCours.setProjet(projectOfCource.get());
+public Cours updateCours(Long id, Cours theCours ,Long projectId) {
+    Cours cours = coursRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Cours not found with ID: " + id));
+    Projet projet = projetRepository.findById(projectId)
+            .orElseThrow(() -> new IllegalArgumentException("Projet not found with ID: " + projectId));
+    if(!cours.getProjet().getId().equals(projectId)){
+        throw new IllegalArgumentException("Cours with ID " + id + " is not associated with Projet with ID " + projectId);
     }
-    return coursRepository.save(theCours );
+    cours.setTitle(theCours.getTitle());
+    cours.setDescription(theCours.getDescription());
+    cours.setDateMAJ(new Date());
+    return coursRepository.save(cours);
 }
 
 

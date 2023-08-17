@@ -22,7 +22,6 @@ public class Quiz {
     private Chapitre chapitre;
 
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     private List<Proposition> propositions;
 
     public Quiz() {

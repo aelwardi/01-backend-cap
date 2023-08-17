@@ -6,29 +6,30 @@ import com.cagemini.lifescience.entity.Manager;
 import java.util.List;
 
 public class ManagerApprenantDTO {
-    private Manager manager;
-    //private List<Apprenant> apprenants;
+    private ManagerInfos manager;
+    private List<ApprenantInfos> apprenants;
 
     public ManagerApprenantDTO() {
     }
-    public ManagerApprenantDTO(Manager manager) {
+
+    public ManagerApprenantDTO(ManagerInfos manager, List<ApprenantInfos> apprenants) {
         this.manager = manager;
-        //this.apprenants = apprenants;
+        this.apprenants = apprenants;
     }
 
-    public Manager getManager() {
+    public ManagerInfos getManager() {
         return manager;
     }
 
-    public void setManager(Manager manager) {
+    public void setManager(ManagerInfos manager) {
         this.manager = manager;
     }
-/*
-    public List<Apprenant> getApprenants() {
+
+    public List<ApprenantInfos> getApprenants() {
         return apprenants;
     }
 
-    public void setApprenants(List<Apprenant> apprenants) {
+    public void setApprenants(List<ApprenantInfos> apprenants) {
         this.apprenants = apprenants;
-    }*/
+    }
 }

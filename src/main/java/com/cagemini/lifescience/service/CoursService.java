@@ -16,10 +16,10 @@ public interface CoursService {
     List<Cours> getCoursesByProjet(Projet projet);
 
     Cours findById(Long theId);
-//add courses to project
+    //add courses to project
     Cours addCoursToProjet(Long projetId, Cours cours);
-    Cours save(Cours theCours);
-    Cours updateCours(Cours theCours,Long projectId);
+    Cours save(Long managerId, Long projetId, Cours theCours);
+    Cours updateCours(Long id, Cours theCours,Long projectId);
 
     // update courses by projet
     //Cours updateCours(Long coursId, Long projetId, Cours updatedCourse);

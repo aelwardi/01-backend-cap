@@ -3,6 +3,7 @@ package com.cagemini.lifescience.rest;
 import com.cagemini.lifescience.entity.Departement;
 import com.cagemini.lifescience.entity.Projet;
 import com.cagemini.lifescience.model.ApiResponse;
+import com.cagemini.lifescience.model.DepartementInfo;
 import com.cagemini.lifescience.service.DepartementService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +22,7 @@ public class DepartementController {
     }
 
     @GetMapping("departements")
-    public List<Departement> findAll (){
+    public List<DepartementInfo> findAll (){
         return departementService.findAll();
     }
 
@@ -62,15 +63,15 @@ public class DepartementController {
     }
 
     @GetMapping("/departements/search")
-    public Page<Departement> searchDepartements(
-            @RequestParam("name") String name, Pageable page
+    public List<DepartementInfo> searchDepartements(
+            @RequestParam("name") String name
     ) {
-        return departementService.findByLastNameContaining(name, page);
+        return departementService.findByLastNameContaining(name);
     }
 
-
+/*
     @GetMapping("/departements/{departementId}/projets")
     public List<Projet> getProjetsByDepartement(@PathVariable Long departementId) {
         return departementService.getProjetsByDepartement(departementId);
-    }
+    }*/
 }

@@ -72,16 +72,13 @@ public class ChapitreServiceImpl implements ChapitreService {
     @Override
     public Chapitre updateChapitre(Chapitre theChapitre, Long theId) {
 
-        Chapitre existingChapitre = chapitreRepository.findById(theId).orElse(null);
+        Chapitre existingChapitre = chapitreRepository.findById(theId)
+                .orElseThrow(() -> new RuntimeException("Chapter not found with id: " + theId));
 
-        if (existingChapitre != null) {
-            existingChapitre.setTitre(theChapitre.getTitre());
-            existingChapitre.setDescription(theChapitre.getDescription());
-            existingChapitre.setDateUpdate(new Date());
-            return chapitreRepository.save(existingChapitre);
-        } else {
-            throw new EntityNotFoundException("Chapitre not found with id: \" : " + theId);
-        }
+        existingChapitre.setTitre(theChapitre.getTitre());
+        existingChapitre.setDescription(theChapitre.getDescription());
+        existingChapitre.setDateUpdate(new Date());
+        return chapitreRepository.save(existingChapitre);
     }
 
 

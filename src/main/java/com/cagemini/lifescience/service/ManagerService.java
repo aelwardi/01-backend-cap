@@ -1,15 +1,17 @@
 package com.cagemini.lifescience.service;
 
 import com.cagemini.lifescience.entity.Manager;
+import com.cagemini.lifescience.model.ManagerInfos;
 
 import java.util.List;
 
 public interface ManagerService {
 
-    List<Manager> findAll();
+    List<ManagerInfos> findAll();
     Manager findById(Long theId);
-    Manager save(Manager theManager);
-    Manager updateManager(Manager theManager);
-    List<Manager> searchByNameOrLastName(Long adminId, String term);
-    Manager getManagerByAdminIdAndManagerId(Long adminId, Long managerId);
+    ManagerInfos getManagerDetails(Long theId);
+    Manager save(Long adminId, Manager theManager);
+    Manager updateManager(Long adminId, Long id ,Manager theManager);
+    List<ManagerInfos> searchByNameOrLastName(Long adminId, String term);
+    ManagerInfos getManagerByAdminIdAndManagerId(Long adminId, Long managerId);
 }

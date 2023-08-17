@@ -9,30 +9,30 @@ import java.util.List;
 
 @JsonIgnoreProperties({"chapitre"})
 public class QuizDTO {
-    private Quiz quiz;
-    private List<Proposition> propositions;
+    private QuizInfo quiz;
+    private List<PropositionInfo> propositions;
 
     public QuizDTO() {
     }
 
-    public QuizDTO(Quiz quiz, List<Proposition> propositions) {
+    public QuizDTO(QuizInfo quiz, List<PropositionInfo> propositions) {
         this.quiz = quiz;
         this.propositions = propositions;
     }
 
-    public Quiz getQuiz() {
+    public QuizInfo getQuiz() {
         return quiz;
     }
 
-    public void setQuiz(Quiz quiz) {
+    public void setQuiz(QuizInfo quiz) {
         this.quiz = quiz;
     }
 
-    public List<Proposition> getPropositions() {
+    public List<PropositionInfo> getPropositions() {
         return propositions;
     }
 
-    public void setPropositions(List<Proposition> propositions) {
+    public void setPropositions(List<PropositionInfo> propositions) {
         this.propositions = propositions;
     }
 }

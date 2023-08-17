@@ -33,6 +33,9 @@ public class Manager {
     @JoinColumn(name = "departement_id", nullable = false)
     private Departement departement;
 
+    @OneToMany(mappedBy = "manager")
+    private List<Cours> courses;
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "admin_id", nullable = false)
     @JsonIgnore
@@ -45,7 +48,8 @@ public class Manager {
         this.managerApprenants = new ArrayList<>();
     }
 
-    public Manager(String lastName, String firstName, Date dateBirth, String phone, String sexe, String email, String password, Boolean etat, byte[] photo, Role role, Departement departement, Admin admin) {
+    public Manager(Long id, String lastName, String firstName, Date dateBirth, String phone, String sexe, String email, String password, boolean etat, byte[] photo, Role role, Departement departement, List<Cours> courses, Admin admin, List<ManagerApprenant> managerApprenants) {
+        this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
         this.dateBirth = dateBirth;
@@ -57,7 +61,9 @@ public class Manager {
         this.photo = photo;
         this.role = role;
         this.departement = departement;
+        this.courses = courses;
         this.admin = admin;
+        this.managerApprenants = managerApprenants;
     }
 
     public List<Apprenant> getApprenants() {
@@ -169,6 +175,22 @@ public class Manager {
 
     public void setAdmin(Admin admin) {
         this.admin = admin;
+    }
+
+    public boolean isEtat() {
+        return etat;
+    }
+
+    public void setEtat(boolean etat) {
+        this.etat = etat;
+    }
+
+    public List<Cours> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Cours> courses) {
+        this.courses = courses;
     }
 
 }
