@@ -22,19 +22,6 @@ public class PropositionServiceImpl implements PropositionService {
         this.propositionRepository = propositionRepository;
         this.quizRepository = quizRepository;
     }
-
-    @Override
-    public Proposition findById(Long theId) {
-        Optional<Proposition> result = propositionRepository.findById(theId);
-        Proposition theProposition = null;
-        if(result.isPresent()){
-            theProposition = result.get();
-        } else {
-            throw new RuntimeException("didn't find the Propodition with ID : " + theId);
-        }
-        return theProposition;
-    }
-
     @Override
     public Proposition save(Long quizId, Proposition theProposition) {
         Quiz quiz = quizRepository.findById(quizId)
@@ -42,7 +29,6 @@ public class PropositionServiceImpl implements PropositionService {
         theProposition.setQuiz(quiz);
         return propositionRepository.save(theProposition);
     }
-
     @Override
     public Proposition updateProposition(Long quizId, Long propositionId, Proposition theProposition) {
         Quiz quiz = quizRepository.findById(quizId)
@@ -57,6 +43,17 @@ public class PropositionServiceImpl implements PropositionService {
         proposition.setResponse(theProposition.getResponse());
         proposition.setCorrecte(theProposition.getCorrecte());
         return propositionRepository.save(proposition);
+    }
+    @Override
+    public Proposition findById(Long theId) {
+        Optional<Proposition> result = propositionRepository.findById(theId);
+        Proposition theProposition = null;
+        if(result.isPresent()){
+            theProposition = result.get();
+        } else {
+            throw new RuntimeException("didn't find the Propodition with ID : " + theId);
+        }
+        return theProposition;
     }
 
     @Override

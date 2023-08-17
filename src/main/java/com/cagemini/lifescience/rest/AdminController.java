@@ -7,8 +7,10 @@ import com.cagemini.lifescience.entity.Departement;
 
 
 import com.cagemini.lifescience.entity.Manager;
+import com.cagemini.lifescience.model.*;
 import com.cagemini.lifescience.service.AdminService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,30 +24,27 @@ public class AdminController {
     private AdminService adminService;
 
 
-    //quick and dirty :inject Admin service
-
+    @Autowired
     public AdminController (AdminService theadminService){
         adminService=theadminService;
     }
 
 
-
-
     @GetMapping("/admins/{adminId}/managers")
-    public Set<Manager> getManagersByAdminId(@PathVariable Long adminId) {
+    public List<ManagerInfos> getManagersByAdminId(@PathVariable Long adminId) {
         return adminService.getManagersByAdmin(adminId);
     }
     //export "/Admins"and return a list of Admins
     @GetMapping("/admins")
-    public List<Admin> findAll (){
+    public List<AdminInfo> findAll (){
         return adminService.findAll();
     }
     @GetMapping("/admins/{adminId}/departements")
-    public Departement getDepartementByAdmin(@PathVariable Long adminId) {
+    public DepartementInfo getDepartementByAdmin(@PathVariable Long adminId) {
         return adminService.getDepartementByAdmin(adminId);
     }
     @GetMapping("/admins/{adminId}/apprenants")
-    public Set<Apprenant> getApprenantsByAdminId(@PathVariable Long adminId) {
+    public List<ApprenantInfos> getApprenantsByAdminId(@PathVariable Long adminId) {
         return adminService.getApprenantsByAdmin(adminId);
     }
 
@@ -60,30 +59,27 @@ public class AdminController {
     }
 
     @PostMapping("/admins" )
-    public  Admin addAdmin(@RequestBody Admin theAdmin){
+    public ApiResponse addAdmin(@RequestParam("superAdminId") Long superAdminId, @RequestBody Admin theAdmin){
         theAdmin.setId(0L);
-        Admin dbAdmin = adminService.save(theAdmin);
-        return dbAdmin;
+        Admin dbAdmin = adminService.save(superAdminId, theAdmin);
+        return new ApiResponse("admin added");
     }
 
-//    @PutMapping("/admins/{adminId}")
-//    public Admin updateAdmin(@RequestBody Admin theAdmin){
-//        Admin dbAdmin = adminService.save(theAdmin);
-//        return dbAdmin;
-//
-//    }
-
     @PutMapping("/admins/{id}")
-    public Admin updateAdmin(@PathVariable Long id, @RequestBody Admin theAdmin) {
-        theAdmin.setId(id); // Set the ID received from the path to the Admin object
-        return adminService.updateAdmin(theAdmin);
+    public ApiResponse updateAdmin(@RequestParam("superAdminId") Long superAdminId,@PathVariable Long id, @RequestBody Admin theAdmin) {
+        Admin dbAdmin = adminService.updateAdmin(superAdminId, id, theAdmin);
+        return new ApiResponse("admin updated");
+    }
+    @PutMapping("/admins/profile/{id}")
+    public ApiResponse updateProfile(@PathVariable Long id, @RequestBody Admin theAdmin) {
+        adminService.updateProfile(id, theAdmin);
+        return new ApiResponse("admin profile updated");
     }
 
 
     @DeleteMapping("/admins/{adminId}")
     public  String deleteAdmin(@PathVariable Long adminId){
         Admin theAdmin = adminService.findById(adminId);
-
         //throw exception if null
 
         if (theAdmin == null){
@@ -95,15 +91,15 @@ public class AdminController {
 
     }
     @GetMapping("/admins/search")
-    public List<Admin> searchAdmins(
+    public List<AdminInfo> searchAdmins(
             @RequestParam("term") String term) {
         return adminService.searchByNameOrLastName(term);
     }
 
     @GetMapping("/admins/details")
-    public ResponseEntity<Admin> getAdminDetails(
+    public ResponseEntity<AdminInfo> getAdminDetails(
             @RequestParam("theId") Long theId) {
-        Admin admin = adminService.findById(theId);
+        AdminInfo admin = this.adminService.getAdminDetails(theId);
         if (admin == null) {
             return ResponseEntity.notFound().build();
         }

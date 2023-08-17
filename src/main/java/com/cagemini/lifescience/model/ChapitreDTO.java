@@ -6,32 +6,31 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 
-@JsonIgnoreProperties({"cours", "quiz"})
 public class ChapitreDTO {
 
-    private Chapitre chapitre;
-    private List<Section> sections;
+    private ChapitreInfo chapitre;
+    private List<SectionInfo> sections;
 
     public ChapitreDTO() {}
 
-    public ChapitreDTO(Chapitre chapitre, List<Section> sections) {
+    public ChapitreDTO(ChapitreInfo chapitre, List<SectionInfo> sections) {
         this.chapitre = chapitre;
         this.sections = sections;
     }
 
-    public Chapitre getChapitre() {
+    public ChapitreInfo getChapitre() {
         return chapitre;
     }
 
-    public void setChapitre(Chapitre chapitre) {
+    public void setChapitre(ChapitreInfo chapitre) {
         this.chapitre = chapitre;
     }
 
-    public List<Section> getSections() {
+    public List<SectionInfo> getSections() {
         return sections;
     }
 
-    public void setSections(List<Section> sections) {
+    public void setSections(List<SectionInfo> sections) {
         this.sections = sections;
     }
 }

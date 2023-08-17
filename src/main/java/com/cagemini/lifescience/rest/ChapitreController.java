@@ -38,23 +38,26 @@ public class ChapitreController {
     public List<Chapitre> getChapitresByCoursId(@PathVariable Long coursId) {
         return chapitreService.getChapitreByCoursId(coursId);
     }
-
+/*
     @PostMapping("/chapitres")
     public Chapitre addChapitre(@RequestParam Long coursId, @RequestBody Chapitre theChapitre){
         theChapitre.setId(0l);
         Chapitre dbChapitre = chapitreService.save(coursId,theChapitre);
         return dbChapitre;
     }
-
+*/
     // Ajouter un chapitre à un cours
     @PostMapping("/chapitres/cours/{coursId}")
-    public Chapitre addChapitreToCours(@PathVariable Long coursId, @RequestBody Chapitre newChapitre) {
-        return chapitreService.addChapitreToCours(coursId, newChapitre);
+    public ApiResponse addChapitreToCours(@PathVariable Long coursId, @RequestBody Chapitre newChapitre) {
+        newChapitre.setId(0L);
+        chapitreService.addChapitreToCours(coursId, newChapitre);
+        return new ApiResponse("Chapter added");
     }
 
     @PutMapping("/chapitres/{theId}")
-    public Chapitre updateChapitre(@PathVariable Long theId, @RequestBody Chapitre theChapitre){
-        return chapitreService.updateChapitre(theChapitre, theId);
+    public ApiResponse updateChapitre(@PathVariable Long theId, @RequestBody Chapitre theChapitre){
+        chapitreService.updateChapitre(theChapitre, theId);
+        return new ApiResponse("Chapter updated");
     }
 
     @DeleteMapping("/chapitres/{theId}/{coursId}")

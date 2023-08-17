@@ -1,11 +1,15 @@
 package com.cagemini.lifescience.service;
 
 import com.cagemini.lifescience.dao.ChapitreRepository;
+import com.cagemini.lifescience.dao.CoursRepository;
 import com.cagemini.lifescience.dao.SectionRepository;
 import com.cagemini.lifescience.entity.Chapitre;
+import com.cagemini.lifescience.entity.Cours;
 import com.cagemini.lifescience.entity.Departement;
 import com.cagemini.lifescience.entity.Section;
 import com.cagemini.lifescience.model.ChapitreDTO;
+import com.cagemini.lifescience.model.ChapitreInfo;
+import com.cagemini.lifescience.model.SectionInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
@@ -21,11 +25,30 @@ import java.util.Optional;
 public class SectionServiceIml implements SectionService {
     private final SectionRepository sectionRepository;
     private final ChapitreRepository chapitreRepository;
+    private final CoursRepository coursRepository;
 
     @Autowired
-    public SectionServiceIml(SectionRepository sectionRepository, ChapitreRepository chapitreRepository) {
+    public SectionServiceIml(SectionRepository sectionRepository, ChapitreRepository chapitreRepository, CoursRepository coursRepository) {
         this.sectionRepository = sectionRepository;
         this.chapitreRepository = chapitreRepository;
+        this.coursRepository = coursRepository;
+    }
+    @Override
+    public List<ChapitreDTO> getChapitresWithSections(Long coursId) {
+        List<ChapitreDTO> chapitreDTOS = new ArrayList<>();
+        Cours cours = coursRepository.findById(coursId)
+                .orElseThrow(() -> new IllegalArgumentException("Cours not found with ID: " + coursId));
+        List<Chapitre> chapitreList = cours.getChapitres();
+        for (Chapitre chapitre: chapitreList){
+            ChapitreInfo chapitreInfo = new ChapitreInfo(chapitre.getId(), chapitre.getTitre(), chapitre.getDescription(), chapitre.getDateCreation(), chapitre.getDateUpdate());
+            List<SectionInfo> sectionInfos = new ArrayList<>();
+            List<Section> sectionList = chapitre.getSection();
+            for (Section section: sectionList){
+                sectionInfos.add(new SectionInfo(section.getId(),section.getTitre(),section.getType(),section.getDescription(),section.getFile(),section.getDateCreated(),section.getDateUpdated(),section.getTempsestimer()));
+            }
+            chapitreDTOS.add(new ChapitreDTO(chapitreInfo, sectionInfos));
+        }
+        return chapitreDTOS;
     }
 
     @Override
@@ -36,18 +59,6 @@ public class SectionServiceIml implements SectionService {
         theSection.setDateCreated(new Date());
         theSection.setDateUpdated(new Date());
         return this.sectionRepository.save(theSection);
-    }
-
-    @Override
-    public List<ChapitreDTO> getChapitresWithSections(Long coursId) {
-        List<Chapitre> chapitres = chapitreRepository.findByCoursId(coursId);
-        List<ChapitreDTO> chapitreDTOS = new ArrayList<>();
-        for (Chapitre chapitre: chapitres){
-            List<Section> sections = sectionRepository.findByChapitreId(chapitre.getId());
-            ChapitreDTO chapitreDTO = new ChapitreDTO(chapitre, sections);
-            chapitreDTOS.add(chapitreDTO);
-        }
-        return chapitreDTOS;
     }
 
     @Override

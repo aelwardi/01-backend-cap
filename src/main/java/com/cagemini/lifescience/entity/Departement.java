@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,24 +17,17 @@ public class Departement {
     @Column(name = "name_dep")
     private String name;
     @OneToMany(mappedBy = "departement" ,cascade = CascadeType.ALL)
-    @JsonIgnore
     private Set<Admin> admins;
 
-//    @OneToMany(mappedBy = "departement" ,cascade = CascadeType.ALL)
-//    @JsonIgnore
-//    private Set<Manager> managers;
-
     @OneToMany(mappedBy = "departement" ,cascade = CascadeType.ALL)
-    @JsonIgnore
     private Set<Apprenant> apprenants;
 
     @OneToMany(mappedBy = "departement", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<Projet> projets;
+    private List<Projet> projets;
 
     public Departement(){}
 
-    public Departement(String name, Set<Admin> admins, Set<Apprenant> apprenants, Set<Projet> projets) {
+    public Departement(String name, Set<Admin> admins, Set<Apprenant> apprenants, List<Projet> projets) {
         this.name = name;
         this.admins = admins;
         this.apprenants = apprenants;
@@ -72,11 +66,11 @@ public class Departement {
         this.apprenants = apprenants;
     }
 
-    public Set<Projet> getProjets() {
+    public List<Projet> getProjets() {
         return projets;
     }
 
-    public void setProjets(Set<Projet> projets) {
+    public void setProjets(List<Projet> projets) {
         this.projets = projets;
     }
 }

@@ -9,8 +9,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.util.List;
+
 @Repository
 public interface DepartementRepository extends JpaRepository<Departement, Long> {
 
-    Page<Departement> findByNameContaining(@Param("name") String name, Pageable page);
+    List<Departement> findByNameContaining(@Param("name") String name);
 }

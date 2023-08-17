@@ -79,6 +79,14 @@ public class Projet {
         this.departement = departement;
     }
 
+    public List<Cours> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Cours> courses) {
+        this.courses = courses;
+    }
+
     public byte[] getPhoto() {
         return photo;
     }

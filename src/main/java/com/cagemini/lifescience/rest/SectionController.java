@@ -23,37 +23,16 @@ public class SectionController {
         this.sectionService = sectionService;
     }
 
-    @PostMapping("/sections")
-    public Section addSection(@RequestParam Long chapitreId, @RequestBody Section theSection) {
-        theSection.setId(0L);
-        Section dbSection = sectionService.save(chapitreId, theSection);
-        return dbSection;
-    }
-
     @GetMapping("/sections")
-    public List<ChapitreDTO> getSectionByChapitre(@RequestParam Long cousId){
+    public List<ChapitreDTO> getChapitresWithSections(@RequestParam Long cousId){
         return sectionService.getChapitresWithSections(cousId);
     }
-
-    @GetMapping("/sections/{theId}")
-    public Section getSectionById(@PathVariable Long theId){
-        return sectionService.findByIds(theId);
+    @PostMapping("/sections")
+    public ApiResponse addSection(@RequestParam Long chapitreId, @RequestBody Section theSection) {
+        theSection.setId(0L);
+        sectionService.save(chapitreId, theSection);
+        return new ApiResponse("Section added!");
     }
-
-
-    @PutMapping("/sections/{chapitreId}/{sectionId}")
-    public ResponseEntity<Section> updateQuiz(@PathVariable Long chapitreId, @PathVariable Long sectionId, @RequestBody Section theSection){
-        Section dbSection = sectionService.updateSection(chapitreId, sectionId, theSection);
-        return ResponseEntity.ok(dbSection);
-    }
-
-    @DeleteMapping("/sections/{theId}/{chapitreId}")
-    public ApiResponse deleteSection(@PathVariable Long theId, @PathVariable Long chapitreId){
-        sectionService.deleteById(theId, chapitreId);
-        return ( new ApiResponse("Deleted section id :" + theId));
-    }
-
-
     @PostMapping("/upload")
     public ApiResponse handleFileUpload(@RequestParam("file") MultipartFile file) {
         try {
@@ -70,6 +49,22 @@ public class SectionController {
             return new ApiResponse("Erreur lors de l'enregistrement du fichier. Le chemin du fichier est nul.");
         }
     }
+    @PutMapping("/sections/{chapitreId}/{sectionId}")
+    public ApiResponse updateQuiz(@PathVariable Long chapitreId, @PathVariable Long sectionId, @RequestBody Section theSection){
+        sectionService.updateSection(chapitreId, sectionId, theSection);
+        return new ApiResponse("Section updated");
+    }
+    @DeleteMapping("/sections/{theId}/{chapitreId}")
+    public ApiResponse deleteSection(@PathVariable Long theId, @PathVariable Long chapitreId){
+        sectionService.deleteById(theId, chapitreId);
+        return ( new ApiResponse("Deleted section id :" + theId));
+    }
+    /*
+    @GetMapping("/sections/{theId}")
+    public Section getSectionById(@PathVariable Long theId){
+        return sectionService.findByIds(theId);
+    }
+    */
     /*
     @PostMapping("/upload")
     public ApiResponse handleFileUpload(@RequestParam("file") MultipartFile file) {

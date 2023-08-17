@@ -3,6 +3,8 @@ package com.cagemini.lifescience.rest;
 
 import com.cagemini.lifescience.entity.Apprenant;
 import com.cagemini.lifescience.entity.Departement;
+import com.cagemini.lifescience.model.ApiResponse;
+import com.cagemini.lifescience.model.ApprenantInfos;
 import com.cagemini.lifescience.service.ApprenantService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,59 +18,36 @@ public class ApprenantController {
     private ApprenantService apprenantService;
 
 
-    //quick and dirty :inject Apprenant service
-
     public ApprenantController (ApprenantService theApprenantService){
         apprenantService=theApprenantService;
     }
 
 
-    //export "/Apprenants"and return a list of Apprenants
-    /*
-    @GetMapping("/apprenants")
-    public List<Apprenant> findAll (){
-        return apprenantService.findAll();
-    }*/
-
-//    @GetMapping("/departements")
-//    public List<Departement> findAllDepartement (){
-//        return apprenantService.getAllDepartement();
-//    }
-
     @GetMapping("/apprenants/{apprenantId}")
-    public Apprenant findById(@PathVariable Long apprenantId){
-        Apprenant theApprenant = apprenantService.findById(apprenantId);
+    public ApprenantInfos findById(@PathVariable Long apprenantId){
+        ApprenantInfos theApprenant = apprenantService.getApprenantDetails(apprenantId);
         if (theApprenant == null){
             throw new RuntimeException("the Apprenant id not found "+apprenantId);
         }
-        else
-            return theApprenant;
+        return theApprenant;
     }
 
     @PostMapping("/apprenants" )
-    public  Apprenant addAprenant(@RequestBody Apprenant theApprenant){
+    public ApiResponse addAprenant(@RequestParam("adminId") Long adminId, @RequestBody Apprenant theApprenant){
         theApprenant.setId(0L);
-        Apprenant dbApprenant = apprenantService.save(theApprenant);
-        return dbApprenant;
+        apprenantService.save(adminId, theApprenant);
+        return new ApiResponse("Apprenant added!");
     }
 
-//        @PutMapping("/apprenants/{apprenantId}")
-//    public Apprenant updateApprenant(@RequestBody Apprenant theApprenant){
-//            Apprenant dbApprenant = apprenantService.save(theApprenant);
-//        return dbApprenant;
-//
-//    }
     @PutMapping("/apprenants/{id}")
-    public Apprenant updateApprenant(@PathVariable Long id,@RequestBody Apprenant theApprenant){
-        theApprenant.setId(id);
-        return apprenantService.updateApprenant(theApprenant);
+    public ApiResponse updateApprenant(@RequestParam("adminId") Long adminId, @PathVariable Long id,@RequestBody Apprenant theApprenant){
+        apprenantService.updateApprenant(adminId, id, theApprenant);
+        return new ApiResponse("Apprenant updated");
     }
 
     @DeleteMapping("/apprenants/{apprenantId}")
     public  String deleteApprenant(@PathVariable Long apprenantId){
         Apprenant theApprenant = apprenantService.findById(apprenantId);
-
-        //throw exception if null
 
         if (theApprenant == null){
             throw new RuntimeException("the apprenant id not found "+apprenantId);
@@ -79,15 +58,16 @@ public class ApprenantController {
 
     }
     @GetMapping("/apprenants/search")
-    public List<Apprenant> searchApprenants(
+    public List<ApprenantInfos> searchApprenants(
+            @RequestParam("adminId") Long adminId,
             @RequestParam("term") String term) {
-        return apprenantService.searchByNameOrLastName(term);
+        return apprenantService.searchByNameOrLastName(adminId, term);
     }
     @GetMapping("/apprenants/details")
-    public ResponseEntity<Apprenant> getApprenantDetails(
+    public ResponseEntity<ApprenantInfos> getApprenantDetails(
             @RequestParam("adminId") Long adminId,
             @RequestParam("id") Long id) {
-        Apprenant apprenant = apprenantService.getApprenantByAdminIdAndApprenantId(adminId, id);
+        ApprenantInfos apprenant = apprenantService.getApprenantByAdminIdAndApprenantId(adminId, id);
         if (apprenant == null) {
             return ResponseEntity.notFound().build();
         }

@@ -12,8 +12,6 @@ import java.util.Set;
 @Table(name = "cours")
 public class Cours {
     @Id
-    // @Column(name = "admin_id",unique = true,nullable = false)
-    // @GenericGenerator(name = "gen",strategy = "foreign",parameters = {@org.hibernate.annotations.Parameter(name = "property",value = "admin")})
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -33,14 +31,20 @@ public class Cours {
 
     @ManyToOne
     @JoinColumn(name = "projet_id")
+    @JsonIgnore
     private Projet projet;
+
+    @ManyToOne
+    @JoinColumn(name = "manager_id")
+    @JsonIgnore
+    private Manager manager;
 
     @OneToMany(mappedBy = "cours" , cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Chapitre> chapitres;
 
 
-    public Cours(Long id, String title, String description, Date dateCreate, Date dateMAJ, Date estimateTime, String actor, String url, Projet projet, List<Chapitre> chapitres) {
+    public Cours(Long id, String title, String description, Date dateCreate, Date dateMAJ, Date estimateTime, String actor, String url, Projet projet, Manager manager, List<Chapitre> chapitres) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -50,6 +54,7 @@ public class Cours {
         this.actor = actor;
         this.url = url;
         this.projet = projet;
+        this.manager = manager;
         this.chapitres = chapitres;
     }
 
@@ -138,17 +143,11 @@ public class Cours {
         this.projet = projet;
     }
 
-    @Override
-    public String toString() {
-        return "cours{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", dateCreate=" + dateCreate +
-                ", dateMAJ=" + dateMAJ +
-                ", estimateTime=" + estimateTime +
-                ", actor='" + actor + '\'' +
-                ", url='" + url + '\'' +
-                '}';
+    public Manager getManager() {
+        return manager;
+    }
+
+    public void setManager(Manager manager) {
+        this.manager = manager;
     }
 }

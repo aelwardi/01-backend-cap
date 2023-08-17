@@ -32,7 +32,7 @@ public class Admin {
     private Role role;
     @OneToMany(mappedBy = "admin" ,cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<Manager> managers;
+    private List<Manager> managers;
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "departement_id", nullable = false)
     private Departement departement;
@@ -49,7 +49,7 @@ public class Admin {
     public Admin() {
     }
 
-    public Admin(String lastName, String firstName, Date dateBirth, String phone, String sexe, String email, String password, Boolean etat, byte[] photo, Role role, Set<Manager> managers, Departement departement, SuperAdmin superAdmin, List<Apprenant> apprenants) {
+    public Admin(String lastName, String firstName, Date dateBirth, String phone, String sexe, String email, String password, Boolean etat, byte[] photo, Role role, List<Manager> managers, Departement departement, SuperAdmin superAdmin, List<Apprenant> apprenants) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.dateBirth = dateBirth;
@@ -178,11 +178,11 @@ public class Admin {
         this.superAdmin = superAdmin;
     }
 
-    public Set<Manager> getManagers() {
+    public List<Manager> getManagers() {
         return managers;
     }
 
-    public void setManagers(Set<Manager> managers) {
+    public void setManagers(List<Manager> managers) {
         this.managers = managers;
     }
 }

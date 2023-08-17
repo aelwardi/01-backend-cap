@@ -4,8 +4,8 @@ import com.cagemini.lifescience.entity.Proposition;
 
 public interface PropositionService {
 
-    Proposition findById(Long theId);
     Proposition save(Long quiz_id, Proposition theProposition);
     Proposition updateProposition(Long quizId, Long propositionId, Proposition theProposition);
+    Proposition findById(Long theId);
     void  deleteById(Long theId, Long quizId);
 }

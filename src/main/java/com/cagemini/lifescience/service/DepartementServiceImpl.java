@@ -2,7 +2,11 @@ package com.cagemini.lifescience.service;
 
 import com.cagemini.lifescience.dao.DepartementRepository;
 import com.cagemini.lifescience.entity.Departement;
+import com.cagemini.lifescience.entity.Manager;
+import com.cagemini.lifescience.entity.ManagerCours;
 import com.cagemini.lifescience.entity.Projet;
+import com.cagemini.lifescience.model.DepartementInfo;
+import com.cagemini.lifescience.model.ManagerInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,8 +30,14 @@ public class DepartementServiceImpl implements DepartementService {
 
 
     @Override
-    public List<Departement> findAll() {
-        return departementRepository.findAll();
+    public List<DepartementInfo> findAll() {
+        List<DepartementInfo> departementInfos = new ArrayList<>();
+        List<Departement> departementList = departementRepository.findAll();
+
+        for (Departement departement: departementList){
+            departementInfos.add(new DepartementInfo(departement.getId(), departement.getName()));
+        }
+        return departementInfos;
     }
 
     @Override
@@ -54,8 +64,14 @@ public class DepartementServiceImpl implements DepartementService {
     }
 
     @Override
-    public Page<Departement> findByLastNameContaining(String name, Pageable page) {
-        return departementRepository.findByNameContaining(name,page);
+    public List<DepartementInfo> findByLastNameContaining(String name) {
+        List<DepartementInfo> departementInfos = new ArrayList<>();
+        List<Departement> departementList = departementRepository.findByNameContaining(name);
+
+        for (Departement departement: departementList){
+            departementInfos.add(new DepartementInfo(departement.getId(), departement.getName()));
+        }
+        return departementInfos;
     }
 
     @Override
@@ -63,11 +79,12 @@ public class DepartementServiceImpl implements DepartementService {
         departementRepository.deleteById(theId);
     }
 
+    /*
     @Override
     public List<Projet> getProjetsByDepartement(Long departementId) {
         Departement departement = departementRepository.findById(departementId)
                 .orElseThrow(() -> new IllegalArgumentException("Department not found with ID: " + departementId));
 
         return new ArrayList<>(departement.getProjets());
-    }
+    }*/
 }

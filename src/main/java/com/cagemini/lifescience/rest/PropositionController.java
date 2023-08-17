@@ -17,16 +17,16 @@ public class PropositionController {
     }
 
     @PostMapping("/propositions")
-    public Proposition addProposition(@RequestParam Long quizId, @RequestBody Proposition theProposition) {
+    public ApiResponse addProposition(@RequestParam Long quizId, @RequestBody Proposition theProposition) {
         theProposition.setId(0L);
-        Proposition dbProposition = propositionService.save(quizId,theProposition);
-        return dbProposition;
+        propositionService.save(quizId,theProposition);
+        return (new ApiResponse("Prospal added!"));
     }
 
     @PutMapping("/propositions/{quizId}/{propositionId}")
-    public ResponseEntity<Proposition> updateProposition(@PathVariable Long quizId, @PathVariable Long propositionId, @RequestBody Proposition thepropositions){
-        Proposition dbpropositions = propositionService.updateProposition(quizId, propositionId, thepropositions);
-        return ResponseEntity.ok(dbpropositions);
+    public ApiResponse updateProposition(@PathVariable Long quizId, @PathVariable Long propositionId, @RequestBody Proposition thepropositions){
+        propositionService.updateProposition(quizId, propositionId, thepropositions);
+        return new ApiResponse("Proposition updated!");
     }
 
     @DeleteMapping("/propositions/{theId}/{quizId}")
