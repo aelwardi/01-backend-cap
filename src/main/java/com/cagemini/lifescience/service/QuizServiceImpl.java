@@ -119,8 +119,8 @@ public class QuizServiceImpl implements QuizService {
         if(!quiz.getChapitre().getId().equals(chapitreId)){
             throw new IllegalArgumentException("Quiz with ID " + theId + " is not associated with Chapitre with ID " + chapitreId);
         }
-
-        quizRepository.delete(quiz);
+        propositionRepository.deletePropositionsByQuizId(theId);
+        quizRepository.deleteQuizWithPropositions(theId, chapitreId);
     }
 
 }
