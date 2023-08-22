@@ -82,21 +82,6 @@ public class CoursServiceImpl implements CoursService{
             return coursRepository.save(theCours);
         }
 
-
-//    @Override
-//    public Cours updateCours(Long coursId, Long projetId, Cours updatedCourse) {
-//        Projet projet = projetRepository.findById(projetId)
-//                .orElseThrow(() -> new ResourceNotFoundException("Projet not found with ID: " + projetId));
-//
-//        Cours existingCourse = coursRepository.findById(coursId)
-//                .orElseThrow(() -> new ResourceNotFoundException("Cours not found with ID: " + coursId));
-//
-//        existingCourse.setProjet(projet);
-//        existingCourse.setTitle(updatedCourse.getTitle());
-//        // Update other course properties as needed
-//
-//        return coursRepository.save(existingCourse);
-//    }
 @Override
 public Cours updateCours(Long id, Cours theCours ,Long projectId) {
     Cours cours = coursRepository.findById(id)
@@ -108,6 +93,7 @@ public Cours updateCours(Long id, Cours theCours ,Long projectId) {
     }
     cours.setTitle(theCours.getTitle());
     cours.setDescription(theCours.getDescription());
+    cours.setPhoto(theCours.getPhoto());
     cours.setDateMAJ(new Date());
     return coursRepository.save(cours);
 }

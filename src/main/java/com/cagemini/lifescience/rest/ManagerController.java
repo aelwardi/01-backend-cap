@@ -63,4 +63,9 @@ public class ManagerController {
 
         return ResponseEntity.ok(manager);
     }
+    @PutMapping("/managers/profile/{id}")
+    public ApiResponse updateProfile(@PathVariable Long id, @RequestBody Manager theManager) {
+        managerService.updateProfile(id, theManager);
+        return new ApiResponse("Manager profile updated");
+    }
 }

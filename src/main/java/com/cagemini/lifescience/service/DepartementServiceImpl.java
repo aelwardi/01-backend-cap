@@ -21,7 +21,7 @@ import java.util.Optional;
 @Transactional
 public class DepartementServiceImpl implements DepartementService {
 
-    private DepartementRepository departementRepository;
+    private final DepartementRepository departementRepository;
 
     @Autowired
     public DepartementServiceImpl(DepartementRepository departementRepository) {

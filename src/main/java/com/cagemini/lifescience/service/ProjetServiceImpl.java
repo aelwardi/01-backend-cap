@@ -112,7 +112,7 @@ public class ProjetServiceImpl implements ProjetService {
                     CoursInfo coursInfo = new CoursInfo();
                     coursInfo.setId(cours.getId());
                     coursInfo.setTitle(cours.getTitle());
-                    coursInfos.add(new CoursInfo(cours.getId(), cours.getTitle(), cours.getDescription(), cours.getActor(), cours.getDateMAJ()));
+                    coursInfos.add(new CoursInfo(cours.getId(), cours.getTitle(), cours.getDescription(), cours.getActor(), cours.getDateMAJ(), cours.getPhoto()));
                 }
             }
             projetDTOs.add(new ProjetDTO(projetInfo, coursInfos));
