@@ -25,6 +25,8 @@ public class Cours {
     private Date dateMAJ;
     private Date estimateTime;
     private String actor;
+    @Column(name = "photo", columnDefinition = "LONGBLOB")
+    private byte[] photo;
     
     @Column(name = "url")
     private String url;
@@ -42,9 +44,11 @@ public class Cours {
     @OneToMany(mappedBy = "cours" , cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Chapitre> chapitres;
+    @OneToOne(mappedBy = "cours", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Contraint contraint;
 
 
-    public Cours(Long id, String title, String description, Date dateCreate, Date dateMAJ, Date estimateTime, String actor, String url, Projet projet, Manager manager, List<Chapitre> chapitres) {
+    public Cours(Long id, String title, String description, Date dateCreate, Date dateMAJ, Date estimateTime, String actor, byte[] photo, String url, Projet projet, Manager manager, List<Chapitre> chapitres, Contraint contraint) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -52,10 +56,12 @@ public class Cours {
         this.dateMAJ = dateMAJ;
         this.estimateTime = estimateTime;
         this.actor = actor;
+        this.photo = photo;
         this.url = url;
         this.projet = projet;
         this.manager = manager;
         this.chapitres = chapitres;
+        this.contraint = contraint;
     }
 
     public Cours(){
@@ -149,5 +155,21 @@ public class Cours {
 
     public void setManager(Manager manager) {
         this.manager = manager;
+    }
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
+
+    public Contraint getContraint() {
+        return contraint;
+    }
+
+    public void setContraint(Contraint contraint) {
+        this.contraint = contraint;
     }
 }

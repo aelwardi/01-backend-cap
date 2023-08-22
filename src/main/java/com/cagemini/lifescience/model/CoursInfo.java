@@ -8,16 +8,18 @@ public class CoursInfo {
     private String description;
     private String actor;
     private Date dateMAJ;
+    private byte[] photo;
 
     public CoursInfo() {
     }
 
-    public CoursInfo(Long id, String title, String description, String actor, Date dateMAJ) {
+    public CoursInfo(Long id, String title, String description, String actor, Date dateMAJ, byte[] photo) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.actor = actor;
         this.dateMAJ = dateMAJ;
+        this.photo = photo;
     }
 
     public Long getId() {
@@ -58,5 +60,13 @@ public class CoursInfo {
 
     public void setDateMAJ(Date dateMAJ) {
         this.dateMAJ = dateMAJ;
+    }
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
     }
 }

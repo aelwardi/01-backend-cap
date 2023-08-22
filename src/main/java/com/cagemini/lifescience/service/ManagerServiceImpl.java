@@ -139,4 +139,14 @@ public class ManagerServiceImpl implements ManagerService {
         return managerInfos;
     }
 
+    @Override
+    public Manager updateProfile(Long id, Manager theManager) {
+        Manager manager = this.managerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Manager not found with ID: " + id));
+        manager.setDateBirth(theManager.getDateBirth());
+        manager.setPhone(theManager.getPhone());
+        manager.setPhoto(theManager.getPhoto());
+        return managerRepository.save(manager);
+    }
+
 }
