@@ -7,7 +7,9 @@ import com.cagemini.lifescience.dao.ManagerRepository;
 import com.cagemini.lifescience.dao.ProjetRepository;
 
 import com.cagemini.lifescience.entity.*;
+import com.cagemini.lifescience.model.ChapitreInfo;
 import com.cagemini.lifescience.model.CoursDTO;
+import com.cagemini.lifescience.model.CoursInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -122,7 +124,15 @@ public Cours updateCours(Long id, Cours theCours ,Long projectId) {
     public CoursDTO getCoursDTOById(Long coursId) {
         Cours theCours = coursRepository.findById(coursId)
                 .orElseThrow(() -> new IllegalArgumentException("Cours not found with ID: " + coursId));
-        List<Chapitre> chapitres = chapitreRepository.findByCoursId(coursId);
+
+        CoursInfo coursInfo = new CoursInfo(theCours.getId(), theCours.getTitle(), theCours.getDescription(), theCours.getActor(), theCours.getDateMAJ(), theCours.getPhoto());
+        List<ChapitreInfo> chapitres = new ArrayList<>();
+        List<Chapitre> chapitreInfoList = chapitreRepository.findByCoursId(coursId);
+        for (Chapitre chapitre: chapitreInfoList){
+            chapitres.add(new ChapitreInfo(chapitre.getId(), chapitre.getTitre(), coursInfo.getDescription(), chapitre.getDateCreation(), chapitre.getDateUpdate()));
+        }
+        CoursDTO coursDTO = new CoursDTO(coursInfo, chapitres);
+
 
         CoursDTO coursDTO = new CoursDTO(theCours, chapitres);
         return coursDTO;

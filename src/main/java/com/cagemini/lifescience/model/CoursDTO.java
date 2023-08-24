@@ -9,27 +9,29 @@ import java.util.List;
 
 @JsonIgnoreProperties({"projet"})
 public class CoursDTO {
-    private Cours cours;
-    private List<Chapitre> chapitres;
+    private CoursInfo cours;
+    private List<ChapitreInfo> chapitres;
 
-    public CoursDTO(Cours cours, List<Chapitre> chapitres) {
+    public CoursDTO() {
+    }
+    public CoursDTO(CoursInfo cours, List<ChapitreInfo> chapitres) {
         this.cours = cours;
         this.chapitres = chapitres;
     }
 
-    public Cours getCours() {
+    public CoursInfo getCours() {
         return cours;
     }
 
-    public void setCours(Cours cours) {
+    public void setCours(CoursInfo cours) {
         this.cours = cours;
     }
 
-    public List<Chapitre> getChapitres() {
+    public List<ChapitreInfo> getChapitres() {
         return chapitres;
     }
 
-    public void setChapitres(List<Chapitre> chapitres) {
+    public void setChapitres(List<ChapitreInfo> chapitres) {
         this.chapitres = chapitres;
     }
 }
