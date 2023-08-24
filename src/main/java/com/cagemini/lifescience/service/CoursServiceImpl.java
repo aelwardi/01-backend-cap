@@ -123,6 +123,7 @@ public Cours updateCours(Long id, Cours theCours ,Long projectId) {
         Cours theCours = coursRepository.findById(coursId)
                 .orElseThrow(() -> new IllegalArgumentException("Cours not found with ID: " + coursId));
         List<Chapitre> chapitres = chapitreRepository.findByCoursId(coursId);
+
         CoursDTO coursDTO = new CoursDTO(theCours, chapitres);
         return coursDTO;
     }
