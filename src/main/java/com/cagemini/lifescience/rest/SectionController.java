@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class SectionController {
@@ -36,19 +37,31 @@ public class SectionController {
     @PostMapping("/upload")
     public ApiResponse handleFileUpload(@RequestParam("file") MultipartFile file) {
         try {
-            String filePath = "C:\\Users\\heisen\\Desktop\\cc\\" + file.getOriginalFilename();
+            String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+            String filePath = "C:\\Users\\heisen\\Desktop\\testing\\02-frontend-cap\\src\\assets\\resources\\" + filename;
+            file.transferTo(new File(filePath));
+            return new ApiResponse(filename);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ApiResponse("");
+        }
+    }
+    /*@PostMapping("/upload")
+    public ApiResponse handleFileUpload(@RequestParam("file") MultipartFile file) {
+        try {
+            String filePath = "C:\\Users\\heisen\\Desktop\\testing\\02-frontend-cap\\src\\app\\assets\\resources" + file.getOriginalFilename();
             file.transferTo(new File(filePath));
 
             if (filePath != null) {
-                return new ApiResponse(filePath);
+                return new ApiResponse(file.getOriginalFilename());
             } else {
-                return new ApiResponse("Le fichier n'a pas été enregistré correctement. Le chemin du fichier est nul.");
+                return new ApiResponse("");
             }
         } catch (IOException e) {
             e.printStackTrace();
-            return new ApiResponse("Erreur lors de l'enregistrement du fichier. Le chemin du fichier est nul.");
+            return new ApiResponse("");
         }
-    }
+    }*/
     @PutMapping("/sections/{chapitreId}/{sectionId}")
     public ApiResponse updateQuiz(@PathVariable Long chapitreId, @PathVariable Long sectionId, @RequestBody Section theSection){
         sectionService.updateSection(chapitreId, sectionId, theSection);

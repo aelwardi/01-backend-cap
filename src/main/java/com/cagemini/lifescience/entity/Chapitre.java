@@ -13,6 +13,7 @@ public class Chapitre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String titre;
+    @Column(name = "description", length = 500)
     private String description;
     private Date dateCreation;
     private Date dateUpdate;
