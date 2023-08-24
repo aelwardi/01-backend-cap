@@ -27,9 +27,6 @@ public class Cours {
     private String actor;
     @Column(name = "photo", columnDefinition = "LONGBLOB")
     private byte[] photo;
-    
-    @Column(name = "url")
-    private String url;
 
     @ManyToOne
     @JoinColumn(name = "projet_id")
@@ -48,7 +45,7 @@ public class Cours {
     private Contraint contraint;
 
 
-    public Cours(Long id, String title, String description, Date dateCreate, Date dateMAJ, Date estimateTime, String actor, byte[] photo, String url, Projet projet, Manager manager, List<Chapitre> chapitres, Contraint contraint) {
+    public Cours(Long id, String title, String description, Date dateCreate, Date dateMAJ, Date estimateTime, String actor, byte[] photo, Projet projet, Manager manager, List<Chapitre> chapitres, Contraint contraint) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -57,7 +54,6 @@ public class Cours {
         this.estimateTime = estimateTime;
         this.actor = actor;
         this.photo = photo;
-        this.url = url;
         this.projet = projet;
         this.manager = manager;
         this.chapitres = chapitres;
@@ -131,14 +127,6 @@ public class Cours {
 
     public void setActor(String actor) {
         this.actor = actor;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public Projet getProjet() {
