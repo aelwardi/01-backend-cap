@@ -124,6 +124,7 @@ public Cours updateCours(Long id, Cours theCours ,Long projectId) {
     public CoursDTO getCoursDTOById(Long coursId) {
         Cours theCours = coursRepository.findById(coursId)
                 .orElseThrow(() -> new IllegalArgumentException("Cours not found with ID: " + coursId));
+
         CoursInfo coursInfo = new CoursInfo(theCours.getId(), theCours.getTitle(), theCours.getDescription(), theCours.getActor(), theCours.getDateMAJ(), theCours.getPhoto());
         List<ChapitreInfo> chapitres = new ArrayList<>();
         List<Chapitre> chapitreInfoList = chapitreRepository.findByCoursId(coursId);
@@ -132,6 +133,8 @@ public Cours updateCours(Long id, Cours theCours ,Long projectId) {
         }
         CoursDTO coursDTO = new CoursDTO(coursInfo, chapitres);
 
+
+        CoursDTO coursDTO = new CoursDTO(theCours, chapitres);
         return coursDTO;
     }
 }
