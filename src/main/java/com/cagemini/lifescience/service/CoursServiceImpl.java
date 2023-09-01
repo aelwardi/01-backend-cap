@@ -132,8 +132,6 @@ public Cours updateCours(Long id, Cours theCours ,Long projectId) {
         }
         CoursDTO coursDTO = new CoursDTO(coursInfo, chapitres);
 
-
-        CoursDTO coursDTO = new CoursDTO(theCours, chapitres);
         return coursDTO;
     }
 
