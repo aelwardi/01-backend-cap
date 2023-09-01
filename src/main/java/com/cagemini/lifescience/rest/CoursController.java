@@ -5,8 +5,11 @@ import com.cagemini.lifescience.entity.Cours;
 import com.cagemini.lifescience.entity.Projet;
 import com.cagemini.lifescience.model.ApiResponse;
 import com.cagemini.lifescience.model.CoursDTO;
+import com.cagemini.lifescience.model.CoursInfo;
+import com.cagemini.lifescience.model.ProjetDTO;
 import com.cagemini.lifescience.service.CoursService;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -16,7 +19,7 @@ import java.util.List;
 public class CoursController {
 
 
-    private CoursService coursService;
+    private final CoursService coursService;
     private final ProjetRepository projetRepository;
 
     public CoursController (CoursService theCoursService,ProjetRepository projetRepository){
@@ -82,5 +85,20 @@ public class CoursController {
     @GetMapping("/coursDTO")
     public CoursDTO getCoursDTOById(@RequestParam("coursId") Long coursId){
         return coursService.getCoursDTOById(coursId);
+    }
+
+    @GetMapping("/cours/apprenants")
+    public ResponseEntity<List<ProjetDTO>> getCoursForApprenant(@RequestParam("apprenantId") Long apprenantId){
+        List<ProjetDTO> projetDTOS = coursService.getCoursForApprenant(apprenantId);
+        return ResponseEntity.ok(projetDTOS);
+    }
+
+    @GetMapping("/cours/search/{apprenantId}")
+    public ResponseEntity<List<CoursInfo>> getCoursByTitleForApprenant(
+            @PathVariable Long apprenantId,
+            @RequestParam("titreCours") String titreCours
+    ) {
+        List<CoursInfo> coursInfos = coursService.getCoursByTitleForApprenant(apprenantId, titreCours);
+        return ResponseEntity.ok(coursInfos);
     }
 }

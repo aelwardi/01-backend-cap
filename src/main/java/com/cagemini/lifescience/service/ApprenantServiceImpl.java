@@ -135,5 +135,15 @@ public class ApprenantServiceImpl implements ApprenantService {
         return apprenantInfos;
     }
 
+    @Override
+    public Apprenant updateProfile(Long id, Apprenant theApprenant) {
+        Apprenant apprenant = this.apprenantRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Consultant not found with ID: " + id));
+        apprenant.setDateBirth(theApprenant.getDateBirth());
+        apprenant.setPhone(theApprenant.getPhone());
+        apprenant.setPhoto(theApprenant.getPhoto());
+        return apprenantRepository.save(apprenant);
+    }
+
 
 }

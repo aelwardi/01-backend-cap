@@ -1,15 +1,10 @@
 package com.cagemini.lifescience.service;
 
 
-import com.cagemini.lifescience.dao.ChapitreRepository;
-import com.cagemini.lifescience.dao.CoursRepository;
-import com.cagemini.lifescience.dao.ManagerRepository;
-import com.cagemini.lifescience.dao.ProjetRepository;
+import com.cagemini.lifescience.dao.*;
 
 import com.cagemini.lifescience.entity.*;
-import com.cagemini.lifescience.model.ChapitreInfo;
-import com.cagemini.lifescience.model.CoursDTO;
-import com.cagemini.lifescience.model.CoursInfo;
+import com.cagemini.lifescience.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -28,14 +23,18 @@ public class CoursServiceImpl implements CoursService{
     private final ProjetRepository projetRepository;
     private final ChapitreRepository chapitreRepository;
     private final ManagerRepository managerRepository;
+    private final ApprenantRepository apprenantRepository;
+    private final ApprenantProjetRepository apprenantProjetRepository;
 
     @Autowired
-    public CoursServiceImpl(CoursRepository theCoursRepository,ProjetRepository projetRepository, ChapitreRepository chapitreRepository, ManagerRepository managerRepository){
+    public CoursServiceImpl(CoursRepository theCoursRepository,ProjetRepository projetRepository, ChapitreRepository chapitreRepository, ManagerRepository managerRepository, ApprenantRepository apprenantRepository, ApprenantProjetRepository apprenantProjetRepository){
 
         this.coursRepository=theCoursRepository;
         this.projetRepository=projetRepository;
         this.chapitreRepository=chapitreRepository;
         this.managerRepository = managerRepository;
+        this.apprenantRepository = apprenantRepository;
+        this.apprenantProjetRepository = apprenantProjetRepository;
     }
     @Autowired
     public List<Cours> findAll(){
@@ -133,8 +132,60 @@ public Cours updateCours(Long id, Cours theCours ,Long projectId) {
         }
         CoursDTO coursDTO = new CoursDTO(coursInfo, chapitres);
 
-
-        CoursDTO coursDTO = new CoursDTO(theCours, chapitres);
         return coursDTO;
     }
+
+    @Override
+    public List<ProjetDTO> getCoursForApprenant(Long apprenantId) {
+        List<ApprenantProjet> apprenantProjets = apprenantProjetRepository.findByApprenantId(apprenantId);
+        List<ProjetDTO> projetsDTO = new ArrayList<>();
+        for(ApprenantProjet apprenantProjet: apprenantProjets){
+            Projet projet = apprenantProjet.getProjet();
+            ProjetInfo projetInfo = new ProjetInfo(projet.getId(), projet.getName());
+
+            List<CoursInfo> coursInfos = new ArrayList<>();
+            for (Cours cours : projet.getCourses()) {
+                CoursInfo coursInfo = new CoursInfo(
+                        cours.getId(),
+                        cours.getTitle(),
+                        cours.getDescription(),
+                        cours.getActor(),
+                        cours.getDateMAJ(),
+                        cours.getPhoto()
+                );
+                coursInfos.add(coursInfo);
+            }
+            ProjetDTO projetDTO = new ProjetDTO(projetInfo, coursInfos);
+            projetsDTO.add(projetDTO);
+        }
+        return projetsDTO;
+    }
+
+    @Override
+    public List<CoursInfo> getCoursByTitleForApprenant(Long apprenantId, String titreCours) {
+        List<CoursInfo> coursInfos = new ArrayList<>();
+
+        List<ApprenantProjet> apprenantProjets = apprenantProjetRepository.findByApprenantId(apprenantId);
+
+        for (ApprenantProjet apprenantProjet : apprenantProjets) {
+            Projet projet = apprenantProjet.getProjet();
+
+            for (Cours cours : projet.getCourses()) {
+                if (cours.getTitle().toLowerCase().contains(titreCours.toLowerCase())) {
+                    CoursInfo coursInfo = new CoursInfo(
+                            cours.getId(),
+                            cours.getTitle(),
+                            cours.getDescription(),
+                            cours.getActor(),
+                            cours.getDateMAJ(),
+                            cours.getPhoto()
+                    );
+                    coursInfos.add(coursInfo);
+                }
+            }
+        }
+
+        return coursInfos;
+    }
+
 }

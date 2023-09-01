@@ -13,5 +13,6 @@ public interface ApprenantProjetRepository extends JpaRepository<ApprenantProjet
     List<ApprenantProjet> findByProjet(Projet projet);
     List<ApprenantProjet> findAllByProjetId(Long projetId);
     List<ApprenantProjet> findByProjetId(Long projetId);
+    List<ApprenantProjet> findByApprenantId(Long apprenantId);
 
 }

@@ -17,4 +17,5 @@ public interface CoursRepository extends JpaRepository<Cours,Long> {
 
     List<Cours> searchByTitle(@Param("term") String term);
     List<Cours> findByProjet(Projet projet);
+
 }
