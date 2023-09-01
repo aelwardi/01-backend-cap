@@ -15,7 +15,7 @@ public class ApprenantProjet {
     private Apprenant apprenant;
     @ManyToOne
     @MapsId("projetId")
-    @JoinColumn(name = "projetId")
+    @JoinColumn(name = "projet_id")
     private Projet projet;
 
     public ApprenantProjet() {

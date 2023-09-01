@@ -38,14 +38,6 @@ public class ChapitreController {
     public List<Chapitre> getChapitresByCoursId(@PathVariable Long coursId) {
         return chapitreService.getChapitreByCoursId(coursId);
     }
-/*
-    @PostMapping("/chapitres")
-    public Chapitre addChapitre(@RequestParam Long coursId, @RequestBody Chapitre theChapitre){
-        theChapitre.setId(0l);
-        Chapitre dbChapitre = chapitreService.save(coursId,theChapitre);
-        return dbChapitre;
-    }
-*/
     // Ajouter un chapitre à un cours
     @PostMapping("/chapitres/cours/{coursId}")
     public ApiResponse addChapitreToCours(@PathVariable Long coursId, @RequestBody Chapitre newChapitre) {

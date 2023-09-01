@@ -3,6 +3,7 @@ package com.cagemini.lifescience.service;
 
 import com.cagemini.lifescience.entity.Apprenant;
 import com.cagemini.lifescience.entity.Departement;
+import com.cagemini.lifescience.entity.Manager;
 import com.cagemini.lifescience.model.ApprenantInfos;
 import com.cagemini.lifescience.model.ManagerInfos;
 
@@ -17,4 +18,6 @@ public interface ApprenantService {
     void  deleteById(Long theId);
     ApprenantInfos getApprenantByAdminIdAndApprenantId(Long adminId, Long apprenantId);
     ApprenantInfos getApprenantDetails(Long theId);
+    Apprenant updateProfile(Long id, Apprenant theApprenant);
+
 }

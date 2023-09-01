@@ -8,8 +8,6 @@ import java.util.Date;
 public class Apprenant {
 
     @Id
-    // @Column(name = "admin_id",unique = true,nullable = false)
-    // @GenericGenerator(name = "gen",strategy = "foreign",parameters = {@org.hibernate.annotations.Parameter(name = "property",value = "admin")})
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String lastName;
@@ -20,6 +18,7 @@ public class Apprenant {
     private String email;
     private String password;
     private  Boolean etat;
+    @Lob
     @Column(name = "photo", columnDefinition = "LONGBLOB")
     private byte[] photo;
     @Enumerated(EnumType.STRING)
@@ -31,12 +30,6 @@ public class Apprenant {
     @ManyToOne()
     @JoinColumn(name = "admin_id")
     private Admin admin;
-
-
-
-//    @ManyToOne(cascade = CascadeType.PERSIST)
-//    @JoinColumn(name = "super_admin_id")
-//    private SuperAdmin superAdmin;
 
 
 

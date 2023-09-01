@@ -18,6 +18,7 @@ public class Projet {
     @Column(length = 500)
     private String description;
 
+    @Lob
     @Column(name = "photo", columnDefinition = "LONGBLOB")
     private byte[] photo;
     @ManyToOne
@@ -94,4 +95,5 @@ public class Projet {
     public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
+
 }

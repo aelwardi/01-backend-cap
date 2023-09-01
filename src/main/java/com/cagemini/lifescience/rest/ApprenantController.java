@@ -3,6 +3,7 @@ package com.cagemini.lifescience.rest;
 
 import com.cagemini.lifescience.entity.Apprenant;
 import com.cagemini.lifescience.entity.Departement;
+import com.cagemini.lifescience.entity.Manager;
 import com.cagemini.lifescience.model.ApiResponse;
 import com.cagemini.lifescience.model.ApprenantInfos;
 import com.cagemini.lifescience.service.ApprenantService;
@@ -73,6 +74,12 @@ public class ApprenantController {
         }
 
         return ResponseEntity.ok(apprenant);
+    }
+
+    @PutMapping("/apprenants/profile/{id}")
+    public ApiResponse updateProfile(@PathVariable Long id, @RequestBody Apprenant theApprenant) {
+        apprenantService.updateProfile(id, theApprenant);
+        return new ApiResponse("Consultant profile updated");
     }
 
 }
